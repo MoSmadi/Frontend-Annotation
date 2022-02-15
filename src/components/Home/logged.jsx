@@ -6,12 +6,12 @@ import Wiki from "./Functions/wiki";
 import Header from "./Header/loggedHeader";
 
 
-const Login = ({
+const Logged = ({
     name,
     email
 }) => {
     return (
-        <div id="logged_in" style={{ display: "none" }}>
+        <div id="logged_in" style={{}}>
 
             <Header name={name} email={email}/>
 
@@ -31,4 +31,4 @@ const Login = ({
     )
 }
 
-export default Login;
+export default Logged;
