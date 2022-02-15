@@ -1,12 +1,16 @@
 // import { Component } from 'react/cjs/react.production.min';
+import React from "react";
 import './App.css';
 import wiki from './wiki.js';
-import LoggedIn from "./components/Home/logged";
+import Logged from "./components/Home/logged";
 import NotLogged from "./components/Home/notLogged";
 
 const App = (props) => {
-  // const [isSignInVisible, setIsSignInVisible] = React.useState(false);
-  const email = "mdweikat@fts.com";
+  
+  const [isLoggedIn] = React.useState(true);
+  //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  
+  const email = "mo.smadi@outlook.com";
 
   return (
     <div className="App">
@@ -16,11 +20,8 @@ const App = (props) => {
 
           {/* {isSignInVisible ? <Icon label="asdaw" onClick={() => setIsSignInVisible(true)} /> : <SignIn />} */}
 
+          {isLoggedIn ? <Logged name="Mohammad Smadi" email={email} /> : <NotLogged />}
           
-          <LoggedIn name="Mohammad Test" email={email} />
-
-          <NotLogged />
-
           
         </div>
       </div>
