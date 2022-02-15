@@ -1,39 +1,27 @@
 import React from "react";
+import AllAnotation from "./Mutual Components/anotationButton";
+import AllPages from "./Mutual Components/pagesButton";
+import About from "./Mutual Components/aboutButton";
+import Wiki from "./Functions/wiki";
+import Header from "./Header/notLoggedHeader";
 
 const notLogged = () => 
 {
     return (
         <div id="not_logged" style={{}}>
             <h1 id="title">Annotations</h1>
-            <hr />
-            <div className="wishlist-border pt-2" style={{ marginBottom: "10px" }}>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#">
-                <span className="recent-orders"> Login / Signup </span>
-              </a>
-            </div>
-
-            <div className="wishlist-border pt-2">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#">
-                <span className="wishlist">Websites used anottation</span>
-              </a>
-            </div>
-
-            <div className="fashion-studio-border pt-2" style={{ marginTop: "10px" }}>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#">
-                <span className="fashion-studio">Annotations in This Page</span>
-              </a>
-            </div>
-
-            <div className="fashion-studio-border pt-2" style={{ marginTop: "10px" }}>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#">
-                <span className="fashion-studio">About</span>
-              </a>
-            </div>
             
+            <Header />
+
+            <AllPages />
+
+            <AllAnotation />
+
+            <About />
+            
+            <hr />
+
+            <Wiki />
 
             {/* <div class=" pt-2" style={{ marginTop: "10px" }}>
               <span class="fashion-studio">Wiki Search</span>
