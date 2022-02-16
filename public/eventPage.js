@@ -7,7 +7,8 @@ chrome.contextMenus.create(
 );
 
 chrome.contextMenus.onClicked.addListener( (clickData) => {
-    if(clickData.menuItemId == "annotate"){
-        alert("Clicked 👏")
+    if(clickData.menuItemId == "annotate" && clickData.selectionText)
+    {
+        alert(clickData.selectionText)
     }
 })
