@@ -1,34 +1,32 @@
 import React from "react";
+import "./Home.css";
 import AllAnotation from "./Mutual Components/anotationButton";
 import AllPages from "./Mutual Components/pagesButton";
 import About from "./Mutual Components/aboutButton";
 import Wiki from "./Functions/wiki";
 import Header from "./Header/loggedHeader";
 
+const Logged = ({ name, email }) => {
+  return (
+    
+      <div id="logged_in" style={{}}>
+        <div className="card">
+        <Header name={name} email={email} />
 
-const Logged = ({
-    name,
-    email
-}) => {
-    return (
-        <div id="logged_in" style={{}}>
+        <hr />
 
-            <Header name={name} email={email}/>
+        <AllPages />
 
-            <hr/>
+        <AllAnotation />
 
-            <AllPages />
+        <About />
 
-            <AllAnotation />
+        <hr />
 
-            <About />
-
-            <hr />
-            
-            <Wiki />
-
-          </div>
-    )
-}
+        <Wiki />
+      </div>
+    </div>
+  );
+};
 
 export default Logged;

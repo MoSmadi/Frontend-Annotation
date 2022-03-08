@@ -1,15 +1,22 @@
 import React from "react";
 
-const LoggedHeader = () => 
+const LoggedHeader = (props) => 
 {
+
+  function handleChange(event)
+  {
+    props.onChange(!event.value)
+  }
+  
     return (
-      <div>
-          <hr />
+      <div onClick={() => {handleChange(props) }}>
+        
         <div className="wishlist-border pt-2" style={{ marginBottom: "10px" }}>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#">
-            <span className="recent-orders"> Login / Signup </span>
+          
+          <a href={() => false} style={{ cursor: "pointer" }}>
+            <span className="recent-orders"  > Login / Signup </span>
           </a>
+
         </div>
       </div>
     );

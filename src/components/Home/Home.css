@@ -1,5 +1,8 @@
 body {
-    background-color: #eee
+    /* background-color: #eee; */
+    opacity: 0.92;
+    background-image: url('https://unsplash.it/1366/768?image=568');
+    font-family: cursive
 }
 
 a {
@@ -234,3 +237,29 @@ a {
 {
     transition: 0.3s ease all;
 }
+
+/* 
+#login-button img
+{
+    display: block;
+    margin: auto;
+    width: 100%;
+    height: auto;
+
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 30px;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(3, 3, 3, .8);
+    overflow: hidden;
+    opacity: 0.9;
+    box-shadow: 10px 10px 30px #000;
+    display: block;
+} */
