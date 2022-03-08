@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## first Add :
-`npx create-react-app`
+`npx create-react-app` or `npx create-react-app <app name>`
 
 ## Second Add :
 `npm install react-scripts --save`
