@@ -10,12 +10,6 @@ chrome.contextMenus.onClicked.addListener( (clickData,tab) => //
 {
     if(clickData.menuItemId == "annotate")
     {
-      /*
-        let ContextCode = "window.getSelection().anchorNode.textContent"
-        let index = ContextCode.lastIndexOf(".")
-        var parent = ".parentNode";
-        var output = [ContextCode .slice(0, index), parent, ContextCode .slice(index)].join('');
-      */
       let ContextCode = "window.getSelection().anchorNode.textContent"
       let LengthCode = "window.getSelection().anchorNode.textContent.length"
       getContext(clickData,tab,ContextCode,LengthCode)
@@ -29,9 +23,15 @@ function getContext(clickData,tab,ContextCode,LengthCode)
     alert("Context Length is : " + length)
     if(length<320)
     {
-      let ContextCode = "window.getSelection().anchorNode.parentNode.parentNode.textContent"
-      let LengthCode = "window.getSelection().anchorNode.parentNode.parentNode.textContent.length"
-      getContext(clickData,tab,ContextCode,LengthCode)
+      let parentNode = ".parentNode";
+      let indexContext = ContextCode.lastIndexOf(".")
+      var newContextCode = [ContextCode .slice(0, indexContext), parentNode, ContextCode .slice(indexContext)].join('');
+
+      let parentLength = ".parentNode";
+      let indexLength = ContextCode.lastIndexOf(".")
+      var newLengthCode = [LengthCode .slice(0, indexLength), parentLength, LengthCode .slice(indexLength)].join('');
+
+      getContext(clickData,tab,newContextCode,newLengthCode)
     }
     else
     {
