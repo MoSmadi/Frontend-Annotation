@@ -1,5 +1,6 @@
 import React from "react";
 // import backward from "../../images/previous.png";
+import close from '../../images/close.png';
 import * as Components from "./Components";
 import axios from 'axios'
 import "./login.css";
@@ -44,10 +45,11 @@ const backButtonStyle =
   cursor: "pointer",
   zIndex: 999,
   position: "absolute",
-  backgroundColor: "mediumaquamarine",
+  // backgroundColor: "mediumaquamarine",
   borderColor: "transparent",
   top: "8px",
   right: "16px",
+  width: "25px",
 }
 
 const backgroundStyle = 
@@ -64,7 +66,8 @@ const backgroundStyle =
   return (
   <Components.Container style={backgroundStyle}>
 
-    <Components.GhostButton style={backButtonStyle} > X </Components.GhostButton>
+    {/* <Components.GhostButton style={backButtonStyle} > X </Components.GhostButton> */}
+    <img src={close} alt="close" style={backButtonStyle} />;
 
       <Components.SignUpContainer signingIn={signIn}>
 
