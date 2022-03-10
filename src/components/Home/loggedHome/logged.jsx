@@ -1,10 +1,11 @@
 import React from "react";
-import "./Home.css";
-import AllAnotation from "./Mutual Components/anotationButton";
-import AllPages from "./Mutual Components/pagesButton";
-import About from "./Mutual Components/aboutButton";
-import Wiki from "./Functions/wiki";
-import Header from "./Header/loggedHeader";
+import "../Home.css";
+import AllAnotation from "../Mutual Components/anotationButton";
+import AllPages from "../Mutual Components/pagesButton";
+import About from "../Mutual Components/aboutButton";
+import Wiki from "../Functions/wiki";
+import Header from "./loggedHeader";
+import Logout from "./logout";
 
 const Logged = ({ name, email }) => {
   return (
@@ -20,6 +21,8 @@ const Logged = ({ name, email }) => {
         <AllAnotation />
 
         <About />
+        
+        <Logout />
 
         <hr />
 

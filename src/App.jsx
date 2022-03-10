@@ -1,8 +1,8 @@
 // import React, { useEffect } from "react";
 import React from "react";
 import wiki from "./wiki.js";
-import Logged from "./components/Home/logged";
-import NotLogged from "./components/Home/notLogged";
+import Logged from "./components/Home/loggedHome/logged";
+import NotLogged from "./components/Home/notLoggedHome/notLogged";
 // import Login from "./components/Login/login";
 
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -43,7 +43,6 @@ const App = () => {
             <NotLogged value = {logged} onChange = {handleChange} />
           )}
 
-          {/* <NotLogged /> */}
         </div>
       </div>
   );

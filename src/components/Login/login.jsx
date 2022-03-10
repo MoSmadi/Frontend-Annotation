@@ -1,9 +1,10 @@
 import React from "react";
+// import backward from "../../images/previous.png";
 import * as Components from "./Components";
 import axios from 'axios'
 import "./login.css";
 
-function Login() 
+function Login(props) 
 {
   const [signIn, toggle] = React.useState(true);
 
@@ -38,9 +39,32 @@ const handleSubmit = async(e)=>
 }
 
 
+const backButtonStyle = 
+{
+  cursor: "pointer",
+  zIndex: 999,
+  position: "relative",
+  backgroundColor: "mediumaquamarine",
+  borderColor: "transparent",
+  marginTop: "350px",
+  marginLeft: "270px",
+}
+
+const backgroundStyle = 
+{
+  backgroundImage: `url("https://unsplash.it/1366/768?image=568")`,
+}
+
+// const secondeBackgroundStyle = 
+// {
+//   opacity: 0.9
+// }
+
 
   return (
-    <Components.Container>
+  <Components.Container style={backgroundStyle}>
+
+    <Components.GhostButton style={backButtonStyle} > back </Components.GhostButton>
 
       <Components.SignUpContainer signingIn={signIn}>
 
@@ -91,6 +115,7 @@ const handleSubmit = async(e)=>
         </Components.Overlay>
       </Components.OverlayContainer>
       
+    {/* </Components.Container> */}
     </Components.Container>
   );
 }
