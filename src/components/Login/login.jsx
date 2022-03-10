@@ -45,7 +45,6 @@ const backButtonStyle =
   cursor: "pointer",
   zIndex: 999,
   position: "absolute",
-  // backgroundColor: "mediumaquamarine",
   borderColor: "transparent",
   top: "8px",
   right: "16px",
@@ -66,7 +65,6 @@ const backgroundStyle =
   return (
   <Components.Container style={backgroundStyle}>
 
-    {/* <Components.GhostButton style={backButtonStyle} > X </Components.GhostButton> */}
     <img src={close} alt="close" style={backButtonStyle} />;
 
       <Components.SignUpContainer signingIn={signIn}>
