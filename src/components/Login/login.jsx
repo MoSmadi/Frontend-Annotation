@@ -2,42 +2,43 @@ import React from "react";
 // import backward from "../../images/previous.png";
 import close from '../../images/close.png';
 import * as Components from "./Components";
-import axios from 'axios'
+import SignupForm from './registration/registrationForm';
+import SigninForm from './signingIn/signingInForm';
 import "./login.css";
 
 function Login(props) 
 {
   const [signIn, toggle] = React.useState(true);
 
-  const [signup , setSignup] = React.useState({
-    fullName    : "",
-    phoneNumber : "",
-    email       : "",
-    Password    : ""
-})
 
 
-const handleChange = ({currentTarget: Input})=>
-{
-  setSignup({...signup,[Input.name] : Input.value});
-}
+//   const [signup , setSignup] = React.useState({
+//     fullName    : "",
+//     phoneNumber : "",
+//     email       : "",
+//     Password    : ""
+// })
+// const handleChange = ({currentTarget: Input})=>
+// {
+//   setSignup({...signup,[Input.name] : Input.value});
+// }
 
-const handleSubmit = async(e)=>
-{
-  e.preventDefault(); // prevent the form to act in the default way (dont refresh)
+// const handleSubmit = async(e)=>
+// {
+//   e.preventDefault(); // prevent the form to act in the default way (dont refresh)
 
-  const registered =
-  {
-    full_name    : signup.fullName,
-    phone_number : signup.phoneNumber,
-    email       : signup.email,
-    password    : signup.Password
-  }
+//   const registered =
+//   {
+//     full_name    : signup.fullName,
+//     phone_number : signup.phoneNumber,
+//     email       : signup.email,
+//     password    : signup.Password
+//   }
   
-    const url = "http://localhost:8001/api/users"
+//     const url = "http://localhost:8001/api/users"
     
-    await axios.post(url,registered)
-}
+//     await axios.post(url,registered)
+// }
 
 
 const backButtonStyle = 
@@ -69,28 +70,14 @@ const backgroundStyle =
 
       <Components.SignUpContainer signingIn={signIn}>
 
-        <Components.Form onSubmit={handleSubmit}>
-          {/*  */}
-          <Components.Title>Create Account</Components.Title>
-          <Components.Input   type="text"       placeholder="Full Name"     name="fullName"       onChange={handleChange}   value={signup.fullName}     required />
-          <Components.Input   type="number"     placeholder="Phone Number"  name="phoneNumber"    onChange={handleChange}   value={signup.phoneNumber}  required />
-          <Components.Input   type="email"      placeholder="E-mail"        name="email"          onChange={handleChange}   value={signup.email}        required />
-          <Components.Input   type="password"   placeholder="Password"      name="Password"       onChange={handleChange}   value={signup.Password}     required />
-          <Components.Button  type="submit"     style={{ cursor: "pointer" }} >Sign Up</Components.Button>
-        </Components.Form>
+        <SignupForm />
 
       </Components.SignUpContainer>
 
 
       <Components.SignInContainer signingIn={signIn}>
-
-        <Components.Form>
-          <Components.Title>Sign in</Components.Title>
-          <Components.Input   type="email"        placeholder="E-mail"      name="email"        required />
-          <Components.Input   type="password"     placeholder="Password"    name="Password"     required/>
-          <Components.Anchor  href="#">Forgot your password?</Components.Anchor>
-          <Components.Button  style={{ cursor: "pointer" }} >Sign In</Components.Button>
-        </Components.Form>
+        
+        <SigninForm />
 
       </Components.SignInContainer>
 
@@ -116,7 +103,6 @@ const backgroundStyle =
         </Components.Overlay>
       </Components.OverlayContainer>
       
-    {/* </Components.Container> */}
     </Components.Container>
   );
 }
