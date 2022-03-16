@@ -3,7 +3,7 @@
   "version": "1.0.0",
 
   "name": "React Annotations",
-  "author": "M.SMADI + M.Hawash + O.Daqqa",
+  "author": "M.SMADI",
   "description": "Build an Extension!",
 
 
@@ -25,5 +25,5 @@
 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
-  "permissions": ["activeTab", "tabs", "contextMenus"]
+  "permissions": ["storage","activeTab", "tabs", "contextMenus"]
 }

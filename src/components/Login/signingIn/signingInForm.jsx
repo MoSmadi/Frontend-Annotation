@@ -1,6 +1,8 @@
+    /*global chrome*/
 import React from "react";
 import * as Components from "../Components";
 import axios from 'axios';
+import {useChromeStorageSync} from 'use-chrome-storage'
 
 const SigninForm = () =>
 {
@@ -31,6 +33,7 @@ const SigninForm = () =>
         const url = "http://localhost:8001/api/users/"+ Email +"/"+ Password;
         
         console.log(url)
+        
         const getPosts = await axios.get(url)
 
         console.log(getPosts.status);
@@ -44,7 +47,6 @@ const SigninForm = () =>
         if(getPosts.status===409)
         {
             alert("wrong password")
-            // change the status on the storage to logged then go home page 
         }
     }
 
