@@ -1,9 +1,9 @@
+    /*global chrome*/
 // import React, { useEffect } from "react";
 import React from "react";
 import wiki from "./wiki.js";
 import Logged from "./components/Home/loggedHome/logged";
 import NotLogged from "./components/Home/notLoggedHome/notLogged";
-// import Login from "./components/Login/login";
 
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import {
@@ -15,8 +15,14 @@ import NotLogged from "./components/Home/notLoggedHome/notLogged";
 // } from "react-router-dom"
 
 const App = () => {
-  let [isLoggedIn] = React.useState(false);
-  //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  let [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  chrome.storage.local.get(['loggedin'], function(result)
+  {
+    console.log('Value currently is ' + result.loggedin);
+    setIsLoggedIn(result.loggedin)
+  });
+
   const [logged, setLogged] = React.useState(false);
 
   // useEffect(() => {

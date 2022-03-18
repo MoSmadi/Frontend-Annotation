@@ -1,5 +1,5 @@
     /*global chrome*/
-import React from "react";
+import React, {useState} from "react";
 import * as Components from "../Components";
 import axios from 'axios';
 import {useChromeStorageSync} from 'use-chrome-storage'
@@ -7,17 +7,17 @@ import {useChromeStorageSync} from 'use-chrome-storage'
 const SigninForm = () =>
 {
 
-    const [signin , setSignin] = React.useState({
+    const [signin , setSignin] = useState({
         email       : "",
         password    : ""
     })
-    
+    const [isAuthorized, setIsAuthorized] = useState(false)
     const handleChange = ({currentTarget: Input})=>
     {
         setSignin({...signin,[Input.name] : Input.value});
     }
 
-    const handleSubmit = async(e)=>
+    const handleSubmit = async (e)=>
     {
         e.preventDefault(); // prevent the form to act in the default way (dont refresh)
 
@@ -33,24 +33,33 @@ const SigninForm = () =>
         const url = "http://localhost:8001/api/users/"+ Email +"/"+ Password;
         
         console.log(url)
-        
-        const getPosts = await axios.get(url)
+        // const posts = new Promise((value)=>{
 
-        console.log(getPosts.status);
+        // }, (error)=> {
 
-        if(getPosts.status===200)
-        {
+        // })
+        // posts.
+        await axios.get(url).then(value => {
+            setIsAuthorized(true)
             alert("correct password")
-            // change the status on the storage to logged then go home page 
-        }
 
-        if(getPosts.status===409)
-        {
+            let loggedStatus = true;
+
+            chrome.storage.local.set({loggedin: loggedStatus}, function() {
+                console.log('Value is set to ' + loggedStatus);
+              });
+              
+
+        }, error => {
             alert("wrong password")
-        }
+        })
+
+        
+        // chrome.storage.local.get(['loggedin'], function(result) {
+        //     console.log('Value currently is ' + result.loggedin);
+        //   });
+       
     }
-
-
 
     return (
 // 
@@ -69,3 +78,4 @@ const SigninForm = () =>
 };
 
 export default SigninForm;
+
