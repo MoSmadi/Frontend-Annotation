@@ -13,7 +13,6 @@ const MyComp = (props) => {
   function handleChange(newValue)
   {
     props.onChange(newValue)
-    // console.log(newValue)
   }
 
   return (

@@ -18,8 +18,8 @@ const Logout = () =>
     <div className="wishlist-border pt-2" style={{ marginTop: "10px" }}>
           
     <a href={() => false} style={{ cursor: "pointer" }}>
-      {/* onClick={LoggedInStatus()} */}
-      <span className="recent-orders"  > Logout </span>
+       {/* onClick={LoggedInStatus()} */}
+      <span className="recent-orders" > Logout </span>
     </a>
 
   </div>
