@@ -2,16 +2,17 @@
 import React, {useState} from "react";
 import * as Components from "../Components";
 import axios from 'axios';
-import {useChromeStorageSync} from 'use-chrome-storage'
 
-const SigninForm = () =>
+const SigninForm = (props) =>
 {
 
     const [signin , setSignin] = useState({
         email       : "",
         password    : ""
     })
+
     const [isAuthorized, setIsAuthorized] = useState(false)
+
     const handleChange = ({currentTarget: Input})=>
     {
         setSignin({...signin,[Input.name] : Input.value});
@@ -39,7 +40,8 @@ const SigninForm = () =>
 
         // })
         // posts.
-        await axios.get(url).then(value => {
+        await axios.get(url).then(value => 
+        {
             setIsAuthorized(true)
             alert("correct password")
 
@@ -48,7 +50,6 @@ const SigninForm = () =>
             chrome.storage.local.set({loggedin: loggedStatus}, function() {
                 console.log('Value is set to ' + loggedStatus);
               });
-              
 
         }, error => {
             alert("wrong password")

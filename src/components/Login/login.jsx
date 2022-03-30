@@ -4,42 +4,12 @@ import close from '../../images/close.png';
 import * as Components from "./Components";
 import SignupForm from './registration/registrationForm';
 import SigninForm from './signingIn/signingInForm';
+// import App from '../../App';
 import "./login.css";
 
 function Login(props) 
 {
   const [signIn, toggle] = React.useState(true);
-
-
-
-//   const [signup , setSignup] = React.useState({
-//     fullName    : "",
-//     phoneNumber : "",
-//     email       : "",
-//     Password    : ""
-// })
-// const handleChange = ({currentTarget: Input})=>
-// {
-//   setSignup({...signup,[Input.name] : Input.value});
-// }
-
-// const handleSubmit = async(e)=>
-// {
-//   e.preventDefault(); // prevent the form to act in the default way (dont refresh)
-
-//   const registered =
-//   {
-//     full_name    : signup.fullName,
-//     phone_number : signup.phoneNumber,
-//     email       : signup.email,
-//     password    : signup.Password
-//   }
-  
-//     const url = "http://localhost:8001/api/users"
-    
-//     await axios.post(url,registered)
-// }
-
 
 const backButtonStyle = 
 {
@@ -57,20 +27,19 @@ const backgroundStyle =
   backgroundImage: `url("https://unsplash.it/1366/768?image=568")`,
 }
 
-// const secondeBackgroundStyle = 
-// {
-//   opacity: 0.9
-// }
-
+function handleChange(event)
+  {
+    props.onChange(!event.value)
+  }
 
   return (
   <Components.Container style={backgroundStyle}>
 
-    <img src={close} alt="close" style={backButtonStyle} />;
+    <img src={close} alt="close" style={backButtonStyle} onClick={() => {handleChange(props) }}/>;
 
       <Components.SignUpContainer signingIn={signIn}>
 
-        <SignupForm />
+        <SignupForm {...props} />
 
       </Components.SignUpContainer>
 

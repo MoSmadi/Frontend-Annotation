@@ -17,6 +17,10 @@ import NotLogged from "./components/Home/notLoggedHome/notLogged";
 const App = () => {
   let [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
+  // chrome.storage.local.set({loggedin: true}, function() {
+  //   console.log('Value is set to true');
+  // });
+
   chrome.storage.local.get(['loggedin'], function(result)
   {
     console.log('Value currently is ' + result.loggedin);

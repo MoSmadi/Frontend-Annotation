@@ -7,9 +7,8 @@ import Wiki from "../Functions/wiki";
 import Header from "./notLoggedHeader";
 import Login from "../../Login/login";
 
-const MyComp = (props) => {
+const Home = (props) => {
   
-
   function handleChange(newValue)
   {
     props.onChange(newValue)
@@ -43,7 +42,7 @@ const NotLogged = (props) =>
   // }onBack={onBack}
   return (
     <div id="not_logged">
-      {props.value ? <Login /> : <MyComp {...props} />}
+      {props.value ? <Login {...props} /> : <Home {...props} />}
     </div>
   );
 };
