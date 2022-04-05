@@ -15,11 +15,11 @@
 
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["./wiki.js"]
+    "js": ["./content/wiki.js","./content/highlight.js"]
   }],
 
   "background": {
-    "scripts":  ["eventPage.js"], 
+    "scripts":  ["./background/eventPage.js"], 
     "persistent": false 
   },
 

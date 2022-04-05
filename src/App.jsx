@@ -17,6 +17,43 @@ import NotLogged from "./components/Home/notLoggedHome/notLogged";
 const App = () => {
   let [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
+  // const GetInfo = async (e)=>
+  //   {
+  //       e.preventDefault(); // prevent the form to act in the default way (dont refresh)
+
+  //       const signinBody =
+  //       {
+  //           email       : signin.email
+  //       }
+    
+  //       let Email = signin.email.toString();
+
+  //       const url = "http://localhost:8001/api/users/"+ Email;
+        
+
+  //       await axios.get(url).then(value => 
+  //       {
+  //           setIsAuthorized(true)
+  //           alert("correct password")
+
+  //           let loggedStatus = true;
+            
+
+  //       }, error => {
+  //           alert("wrong password")
+  //       })
+
+        
+  //       // chrome.storage.local.get(['loggedin'], function(result) {
+  //       //     console.log('Value currently is ' + result.loggedin);
+  //       //   });
+       
+  //   }
+
+
+
+
+  
   // chrome.storage.local.set({loggedin: true}, function() {
   //   console.log('Value is set to true');
   // });

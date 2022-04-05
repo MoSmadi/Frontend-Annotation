@@ -1,10 +1,32 @@
+    /*global chrome*/
+import { tab } from "@testing-library/user-event/dist/tab";
 import React from "react";
 
 const AllAnotation = () => 
 {
+  function buttonClicked()
+  {
+    console.log("tab");
+  }
+
   function highlight()
   {
-    alert("Annotations in This Page is about to appear now")
+
+    let params = 
+    {
+      active : true,
+      currentWindow : true
+    }
+    chrome.tabs.query(params,gotTabs)
+
+    function gotTabs(tabs)
+    {
+      let msg = {
+        txt: "highlight"
+      }
+      chrome.tabs.sendMessage(tabs[0].id,msg)
+    }
+
   }
 
     return (
