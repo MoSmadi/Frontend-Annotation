@@ -21,12 +21,28 @@ chrome.contextMenus.onClicked.addListener( (clickData,tab) => //
       //let countInContext  =   getNumberOfWordsInTheContest(selectedText,context);
 
 
+      //window.open('../modal.html')
+
+ 
+      var params = new URLSearchParams();
+
+      params.append("selectedText",selectedText);
+      params.append("pageUrl",pageUrl);
+      params.append("pageTitle",pageTitle);
+
+  
+      var url="../annotationPage/modal.html?"+params.toString();
+  
+      window.open(url, 'title', 'width=500,height=300');
+        
+
+  
       
-      alert("Selection Text : "   + selectedText)
-      alert("Page URL : "            + pageUrl)
-      alert("Page Title : "          + pageTitle)
-      alert("Count In Page : "       + countInPage)
-      alert("Context is : "       + context)
+      // alert("Selection Text : "   + selectedText)
+      // alert("Page URL : "            + pageUrl)
+      // alert("Page Title : "          + pageTitle)
+      // alert("Count In Page : "       + countInPage)
+      // alert("Context is : "       + context)
 
       //getContext(clickData,tab,ContextCode,LengthCode)
     }
@@ -176,3 +192,27 @@ function getLocalName(localnameCode)
 }
 
 */
+
+
+
+
+/**
+ 
+if (selectedText.length > 0) 
+{
+  var first = selectedText;
+  let origin = window.location.origin;
+  let link = window.location.href;//link
+
+  //alert(origin);
+ 
+  var params = new URLSearchParams();
+  params.append("first",first);
+  params.append("link",link);//link
+  var url="http://localhost:8080/HelloWorld/new.html?"+params.toString();
+
+  window.open(url, 'title', 'width=500,height=300');
+      
+}
+
+ */
