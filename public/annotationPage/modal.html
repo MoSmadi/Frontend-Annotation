@@ -1,323 +1,300 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <link rel="stylesheet" href="./libraries/bootstrap.min.css">
-      <script src="./libraries/jquery.slim.min.js"></script>
-      <script src="./libraries/popper.min.js"></script>
-      <script src="./libraries/bootstrap.bundle.min.js"></script>
-	  
-      <style>
-         @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
-		 body {
-			 min-height: 81vh;
-			 background: linear-gradient(0deg, #fff, 50%, #DEEEFE);
-			 font-family: 'Rubik', sans-serif;
-			 background-repeat: no-repeat 
-		}
-		 .container {
-			 margin-top: 250px !important 
-		}
-		 p {
-			 font-size: 14px !important 
-		}
-		 .card-body {
-			 border-radius: 9px !important 
-		}
-		 small {
-			 font-size: 15px !important;
-			 display: flex;
-			 justify-content: center !important 
-		}
-		 button {
-			 font-size: calc(12px + (13 - 12) * ((100vw - 360px) / (1600 - 320))) !important;
-			 ;
-			 padding: calc(6px + 5 * ((100vw - 320px) / 780)) !important;
-			 color: #000 !important 
-		}
-		 button:focus {
-			 -moz-box-shadow: none !important;
-			 -webkit-box-shadow: none !important;
-			 box-shadow: none !important;
-			 outline-width: 0 
-		}
-		 label {
-			 font-size: 11px !important;
-			 vertical-align: middle !important 
-		}
-		 #my-input {
-			 vertical-align: middle !important 
-		}
-		 .custom-control {
-			 padding: auto !important 
-		}
-		 .signin {
-			 color: #52B4DB;
-			 cursor: pointer 
-		}
-		 .custom-control-label span {
-			 position: relative;
-			 top: 4px 
-		}
-		 .modal-content {
-			 width: calc(480px + 10 * ((100vw - 320px) / 680)) 
-		}
-		 .modal {
-			 background-image: radial-gradient(circle 919px at 1.7% 6.1%, rgb(198, 198, 207) 0%, rgb(133, 208, 240) 100.2%) 
-		}
-		 .modal-content {
-			 background: transparent !important 
-		}
-		 .cross {
-			 font-size: 25px !important;
-			 cursor: pointer 
-		}
-		 .btn-primary:hover, .btn-primary {
-			 background-color: #315189;
-			 color: #fff !important 
-		}
-		 input {
-			 padding: 6px 12px 6px 12px;
-			 border: 1px solid lightgrey;
-			 border-radius: 4px;
-			 margin-bottom: 25px;
-			 margin-top: 2px;
-			 width: 100%;
-			 box-sizing: border-box;
-			 color: #2C3E50;
-			 font-size: 14px;
-			 letter-spacing: 1px;
-			 background-color: #ECEFF1 
-		}
-		 input:focus {
-			 -moz-box-shadow: none !important;
-			 -webkit-box-shadow: none !important;
-			 box-shadow: none !important;
-			 border: 1px solid #304FFE;
-			 outline-width: 0 
-		}
-		 a:focus, button:focus {
-			 -moz-box-shadow: none !important;
-			 -webkit-box-shadow: none !important;
-			 box-shadow: none !important;
-			 outline-width: 0 
-		}
-		 select:focus, input:focus {
-			 box-shadow: none !important;
-			 border: 1px solid #2196F3 !important;
-			 outline-width: 0 !important;
-			 font-weight: 400;
-			 background-color: #ECEFF1 
-		}
-		 select {
-			 padding: 6px 12px 6px 12px;
-			 background-color: #ECEFF1 !important 
-		}
-		 .pass {
-			 font-size: 11px;
-			 color: #2196F3;
-			 cursor: pointer 
-		}
-		 .line {
-			 height: 1px;
-			 width: 45%;
-			 background-color: #E0E0E0;
-			 margin-top: 10px 
-		}
-		 .or {
-			 width: 10% 
-		}
-		 .btn-inverse {
-			 font-size: calc(12px + (14 - 12) * ((100vw - 360px) / (1600 - 300))) !important;
-			 padding-top: calc(4px + 3 * ((100vw - 320px) / 680));
-			 padding-bottom: calc(4px + 3 * ((100vw - 320px) / 680));
-			 padding-left: calc(5px + 8 * ((100vw - 320px) / 680));
-			 padding-right: calc(5px + 8 * ((100vw - 320px) / 680));
-			 box-shadow: 2px 3px 2px #888888;
-			 border: 1px solid #ccc 
-		}
-		 @media (max-width: 492px) {
-			 .card {
-				 width: unset 
-			}
-		}
-		 .card {
-			 position: relative;
-			 display: flex;
-			 flex-direction: column;
-			 min-width: 0;
-			 word-wrap: break-word;
-			 background-color: #fff;
-			 background-clip: border-box;
-			 border: 1px solid #d2d2dc;
-			 border-radius: 11px;
-			 -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
-			 -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
-			 box-shadow: 0px 0px 5px 0px rgb(161, 163, 164) 
-		}
-		 .media img {
-			 width: 60px;
-			 height: 60px 
-		}
-		 .reply a {
-			 text-decoration: none 
+
+<head>
+
+	<link href="./libraries/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="./libraries/jquery.slim.min.js"></script>
+	<script src="./libraries/bootstrap.min.js"></script>
+
+	<style>
+		#login {
+			display: none;
 		}
 
-      </style>
-   </head>
+		.login,
+		.logout {
+			position: absolute;
+			top: -3px;
+			right: 0;
+		}
 
-   <body>
-	<p id="demo"></p>
-	<p id="demo1"></p>
-	<p id="demo2"></p>
+		.page-header {
+			position: relative;
+		}
 
-      <div class="container d-flex justify-content-center">
-      <button id="btn" class="btn btn-primary" data-toggle="modal" data-target="#my-modal">Sign in</button>
-      <div id="my-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered justify-content-center " role="document">
-      <div class="modal-content border-0 mx-3">
-         <div class="modal-body p-0">
-            <div class="row justify-content-center">
-               <div class="col">
-                  <div class="card">
-                     <div class="card-header bg-white border-0 pb-3">
-                        <div class="row justify-content-between align-items-center">
-                           <div class="flex-col-auto"></div>
-                           <div class="col-auto text-right"><button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span class="cross" aria-hidden="true">&times;</span> </button></div>
-                        </div>
-                     </div>
-                     <div class="card-body pt-0">
-                        <div class="col-md-12">
-                           <h3 class="text-center mb-5"> Add Annotation </h3>
-						   
-						   <form action="">
-							   <label for="reply">Add Comment</label>
-								<input type="textarea" id="comment" name="comment">
-								<input type="submit" value="Submit">
-						   </form>
-						  	<!-- Add Comment -->					   
-							
-						   
-						   <br><br>
-						   
-						   
-						   
-						   <!-- Comment Container Without Reply -->
-						   <div>
-							   <div class="row">
-								  <div class="col-md-12">
-									 <div class="media">
-										<!-- Image  -->
-										<img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
-										<div class="media-body">
-										   <!-- Header Info -->
-										   <div class="row">
-											  <!-- INFO  -->
-											  <div class="col-8 d-flex">
-												 <h5>Maria Smantha</h5>
-												 <span>- 2 hours ago</span>
-											  </div>
-											  <!-- Reply Button  -->
-											  <div class="col-4">
-												 <div class="pull-right reply"> 
-													<a href="#">
-													<span>
-													<i class="fa fa-reply"> reply </i> 
-													</span>
-													</a> 
-												 </div>
-											  </div>
-										   </div>
-										   <!-- The Comment  -->
-										   <p> It is a long established fact that a reader will be distracted by the readable content of a page. </p>
-										   
-										   <form action="">
-											   <label for="reply">Add Reply</label>
-											   <input type="textarea" id="reply" name="reply">
-											   <input type="submit" value="Submit">
-										   </form>
-										 
+		.reviews {
+			color: #555;
+			font-weight: bold;
+			margin: 10px auto 20px;
+		}
 
+		.notes {
+			color: #999;
+			font-size: 12px;
+		}
+
+		.media .media-object {
+			max-width: 120px;
+		}
+
+		.media-body {
+			position: relative;
+		}
+
+		.media-date {
+			position: absolute;
+			right: 25px;
+			top: 25px;
+		}
+
+		.media-date li {
+			padding: 0;
+		}
+
+		.media-date li:first-child:before {
+			content: '';
+		}
+
+		.media-date li:before {
+			content: '.';
+			margin-left: -2px;
+			margin-right: 2px;
+		}
+
+		.media-comment {
+			margin-bottom: 20px;
+		}
+
+		.media-replied {
+			margin: 0 0 20px 50px;
+		}
+
+		.media-replied .media-heading {
+			padding-left: 6px;
+		}
+
+		.btn-circle {
+			font-weight: bold;
+			font-size: 12px;
+			padding: 6px 15px;
+			border-radius: 20px;
+		}
+
+		.btn-circle span {
+			padding-right: 6px;
+		}
+
+		.embed-responsive {
+			margin-bottom: 20px;
+		}
+
+		.tab-content {
+			padding: 50px 15px;
+			border: 1px solid #ddd;
+			border-top: 0;
+			border-bottom-right-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+
+		.custom-input-file {
+			overflow: hidden;
+			position: relative;
+			width: 120px;
+			height: 120px;
+			background: #eee url('https://s3.amazonaws.com/uifaces/faces/twitter/walterstephanie/128.jpg');
+			background-size: 120px;
+			border-radius: 120px;
+		}
+
+		input[type="file"] {
+			z-index: 999;
+			line-height: 0;
+			font-size: 0;
+			position: absolute;
+			opacity: 0;
+			filter: alpha(opacity=0);
+			-ms-filter: "alpha(opacity=0)";
+			margin: 0;
+			padding: 0;
+			left: 0;
+		}
+
+		.uploadPhoto {
+			position: absolute;
+			top: 25%;
+			left: 25%;
+			display: none;
+			width: 50%;
+			height: 50%;
+			color: #fff;
+			text-align: center;
+			line-height: 60px;
+			text-transform: uppercase;
+			background-color: rgba(0, 0, 0, .3);
+			border-radius: 50px;
+			cursor: pointer;
+		}
+
+		.custom-input-file:hover .uploadPhoto {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="page-header">
+					<h3 class="reviews" id="title"></h3>
+
+				</div>
+				<div class="comment-tabs">
+
+
+					<!-- Header -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="active">
+							<a href="#comments-logout" role="tab" data-toggle="tab">
+								<h4 class="reviews text-capitalize">Comments</h4>
+							</a>
+						</li>
+						<li>
+							<a href="#add-comment" role="tab" data-toggle="tab">
+								<h4 class="reviews text-capitalize">Add comment</h4>
+							</a>
+						</li>
+					</ul>
+
+
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="comments-logout">
+
+							<!-- All Comments-->
+							<ul class="media-list">
+
+								<!-- First Comment With Reply-->
+								<li class="media">
+
+									<div class="media-body">
+										<div class="well well-lg">
+											<h4 class="media-heading text-uppercase reviews">Mohammad Smadi </h4>
+											<ul class="media-date text-uppercase reviews list-inline">
+												<li class="dd">22</li>
+												<li class="mm">09</li>
+												<li class="aaaa">2014</li>
+											</ul>
+											<p class="media-comment">
+												Great snippet! Thanks for sharing.
+											</p>
+											<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply">
+												Reply
+											</a>
+											<a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse"
+												href="#replyOne">
+												2 comments
+											</a>
 										</div>
-									 </div>
-								  </div>
-							   </div>
-							   <hr>
-						   </div>
-						   
-						   
-						   
-						   
-                           <!-- Comment Container With Reply-->
-						   <div>
-							   <div class="row">
-								  <div class="col-md-12">
-									 <div class="media">
-										<!-- Image  -->
-										<img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="https://i.imgur.com/stD0Q19.jpg" />
-										<div class="media-body">
-										   <!-- Header Info -->
-										   <div class="row">
-											  <!-- INFO  -->
-											  <div class="col-8 d-flex">
-												 <h5>Maria Smantha</h5>
-												 <span>- 2 hours ago</span>
-											  </div>
-											  <!-- Reply Button  -->
-											  <div class="col-4">
-												 <div class="pull-right reply"> 
-													<a href="#">
-													<span>
-													<i class="fa fa-reply"> reply </i> 
-													</span>
-													</a> 
-												 </div>
-											  </div>
-										   </div>
-										   <!-- The Comment  -->
-										   <p> It is a long established fact that a reader will be distracted by the readable content of a page. </p>
-										 
-										   <form action="">
-												<label for="reply">Add Reply</label>
-												<input type="textarea" id="reply" name="reply">
-												<input type="submit" value="Submit">
-											</form>
-											
-									  
-										   
-										   <!-- First Reply Container -->
-										   <div class="media mt-4">
-											  <a class="pr-3" href="#">
-											  <img class="rounded-circle" alt="Bootstrap Media Another Preview" src="https://i.imgur.com/xELPaag.jpg" />
-											  </a>
-											  <div class="media-body">
-												 <div class="row">
-													<div class="col-12 d-flex">
-													   <h5>Simona Disa</h5>
-													   <span>- 3 hours ago</span>
+									</div>
+
+									<!-- Replys -->
+									<div class="collapse" id="replyOne">
+
+
+										<ul class="media-list">
+
+
+											<li class="media media-replied">
+												<div class="media-body">
+													<div class="well well-lg">
+														<h4 class="media-heading text-uppercase reviews">
+															The Hipster
+														</h4>
+														<ul class="media-date text-uppercase reviews list-inline">
+															<li class="dd">22</li>
+															<li class="mm">09</li>
+															<li class="aaaa">2014</li>
+														</ul>
+														<p class="media-comment">
+															Nice job Maria.
+														</p>
 													</div>
-												 </div>
-												 letters, as opposed to using 'Content here, content here', making it look like readable English.
-											  </div>
-										   </div>
-										</div>
-									 </div>
-								  </div>
-							   </div>
-							   <hr>
-                           </div>
-						   				   					   
-						   
-						   
-						   
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </body>
+												</div>
+											</li>
 
-   <script src="./modalScript.js"></script>
+
+
+										</ul>
+
+
+									</div>
+
+								</li>
+
+
+
+								<!-- Seconde Comment Without Reply-->
+								<li class="media">
+
+									<div class="media-body">
+										<div class="well well-lg">
+											<h4 class="media-heading text-uppercase reviews">Nico</h4>
+											<ul class="media-date text-uppercase reviews list-inline">
+												<li class="dd">22</li>
+												<li class="mm">09</li>
+												<li class="aaaa">2014</li>
+											</ul>
+											<p class="media-comment">
+												I'm looking for that. Thanks!
+											</p>
+											<a class="btn btn-info btn-circle text-uppercase" href="#" id="reply">
+												Reply
+											</a>
+										</div>
+									</div>
+								</li>
+
+
+
+							</ul>
+
+
+						</div>
+
+
+
+						<!-- Add Comment-->
+						<div class="tab-pane" id="add-comment">
+							<form action="#" method="post" class="form-horizontal" id="commentForm" role="form">
+								
+								<div class="form-group">
+									<label for="email" class="col-sm-2 control-label">Comment</label>
+									<div class="col-sm-10">
+										<textarea class="form-control" name="addComment" id="addComment" rows="5"></textarea>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<div class="col-sm-offset-2 col-sm-10">
+										<button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment">
+											Submit comment
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="notes text-center"><small>Created By Mohammad Smadi</small></div>
+	</div>
+</body>
+
+<script src="./modalScript.js"></script>
 
 </html>
