@@ -16,6 +16,8 @@ import NotLogged from "./components/Home/notLoggedHome/notLogged";
 
 const App = () => {
   let [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  let [email, setemail] = React.useState("mo.smadi@outlook.com");
+  let [fullName, setfullName] = React.useState(false);
 
   // const GetInfo = async (e)=>
   //   {
@@ -64,20 +66,22 @@ const App = () => {
     setIsLoggedIn(result.loggedin)
   });
 
-  const [logged, setLogged] = React.useState(false);
+  chrome.storage.local.get(['email'], function(result) {
+    console.log('Value is set to ' + result.email);
+    setemail(result.email)
+  });
 
-  // useEffect(() => {
-  //   localStorage.getItem("loggedIn")
-  //   setIsLoggedIn();
-  // }, [])
+chrome.storage.local.get(['fullName'], function(result) {
+    console.log('Value is set to ' + result.fullName);
+    setfullName(result.fullName)
+  });
+
+  const [logged, setLogged] = React.useState(false);
 
   function handleChange(newValue)
   {
     setLogged(newValue)
   }
-
-
-  const email = "mo.smadi@outlook.com";
 
   return (
     <div className="App">
@@ -85,7 +89,7 @@ const App = () => {
       <div className="d-flex justify-content-center container mt-5">
 
           {isLoggedIn ? (
-            <Logged name="Mohammad Smadi" email={email} />
+            <Logged name={fullName} email={email} />
           ) : (
             <NotLogged value = {logged} onChange = {handleChange} />
           )}

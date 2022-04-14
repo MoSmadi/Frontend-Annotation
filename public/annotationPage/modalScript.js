@@ -9,6 +9,22 @@ document.getElementById("demo1").innerHTML = "The Page URL Is : " +  pageUrl;
 document.getElementById("demo2").innerHTML = "The Page Title Is: " + pageTitle;
 
 
+// check if is logged in (API Storage)
+chrome.storage.local.get(['loggedin'], function(result)
+  {
+      console.log('Value currently is ' + result.loggedin);
+      if(result.loggedin ==  true)
+      {
+          alert("logged")
+      }
+    
+      else
+      {
+          alert("not logged")
+      }
+  });
+
+
 document.addEventListener('DOMContentLoaded', function() 
 {
     var link = document.getElementById('btn');

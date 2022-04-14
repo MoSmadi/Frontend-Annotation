@@ -33,7 +33,7 @@ const SigninForm = (props) =>
 
         const url = "http://localhost:8001/api/users/"+ Email +"/"+ Password;
         
-        console.log(url)
+        //console.log(url)
         // const posts = new Promise((value)=>{
 
         // }, (error)=> {
@@ -43,30 +43,31 @@ const SigninForm = (props) =>
         await axios.get(url).then(value => 
         {
             setIsAuthorized(true)
-            alert("correct password")
 
+            let fullName = value.data.full_name;
+            let email = value.data.email;
             let loggedStatus = true;
-
+            
+            window.close();
+        
             chrome.storage.local.set({loggedin: loggedStatus}, function() {
                 console.log('Value is set to ' + loggedStatus);
+              });
+
+            chrome.storage.local.set({email: email}, function() {
+                console.log('Value is set to ' + email);
+              });
+
+            chrome.storage.local.set({fullName: fullName}, function() {
+                console.log('Value is set to ' + fullName);
               });
 
         }, error => {
             alert("wrong password")
         })
-
-        
-        // chrome.storage.local.get(['loggedin'], function(result) {
-        //     console.log('Value currently is ' + result.loggedin);
-        //   });
-       
     }
 
     return (
-// 
-// <Components.Input   type="password"   placeholder="Password"      name="Password"       onChange={handleChange}   value={signin.Password}     required />
-// <Components.Button  type="submit"     style={{ cursor: "pointer" }} >Sign Up</Components.Button>
-
 
         <Components.Form onSubmit={handleSubmit}>
             <Components.Title>Sign in</Components.Title>
