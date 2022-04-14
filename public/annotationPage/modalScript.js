@@ -15,12 +15,12 @@ chrome.storage.local.get(['loggedin'], function(result)
       console.log('Value currently is ' + result.loggedin);
       if(result.loggedin ==  true)
       {
-        //   alert("logged")
+        document.getElementById("comment").style.display = "block";
       }
     
       else
       {
-        //   alert("not logged")
+        document.getElementById("notSignned").style.display = "block";
       }
   });
 

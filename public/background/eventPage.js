@@ -33,7 +33,7 @@ chrome.contextMenus.onClicked.addListener( (clickData,tab) => //
   
       var url="../annotationPage/modal.html?"+params.toString();
   
-      window.open(url, 'title', 'width=500,height=300');
+      window.open(url, 'title', 'width=520,height=450');
         
 
   
