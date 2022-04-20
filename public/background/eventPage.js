@@ -6,119 +6,74 @@ chrome.contextMenus.create(
     }
 );
 
-chrome.contextMenus.onClicked.addListener( (clickData,tab) => //
+chrome.contextMenus.onClicked.addListener( (clickData,tab) => 
 {
     if(clickData.menuItemId == "annotate")
     {
-      let ContextCode = "window.getSelection().anchorNode.textContent"
-      let LengthCode = "window.getSelection().anchorNode.textContent.length"
+      let localNameCode   =   "window.getSelection().anchorNode.parentElement.localName"
 
       let selectedText    =   clickData.selectionText;
       let pageUrl         =   clickData.pageUrl;
       let pageTitle       =   tab.title;
-      //let context         =   getContext(ContextCode,LengthCode);
+
+
+      // getContext(localNameCode)
+      
+      //let context         =   getContext(localNameCode);
       //let countInPage     =   getNumberOfWordsSameInPage(selectedText);
       //let countInContext  =   getNumberOfWordsInTheContest(selectedText,context);
 
-
-      //window.open('../modal.html')
-
  
-      var params = new URLSearchParams();
+      let params = new URLSearchParams();
 
       params.append("selectedText",selectedText);
       params.append("pageUrl",pageUrl);
       params.append("pageTitle",pageTitle);
 
   
-      var url="../annotationPage/modal.html?"+params.toString();
+      let url="../annotationPage/modal.html?"+params.toString();
   
-      window.open(url, 'title', 'width=520,height=450');
-        
-
-  
-      
-      // alert("Selection Text : "   + selectedText)
-      // alert("Page URL : "            + pageUrl)
-      // alert("Page Title : "          + pageTitle)
-      // alert("Count In Page : "       + countInPage)
-      // alert("Context is : "       + context)
-
-      //getContext(clickData,tab,ContextCode,LengthCode)
+      window.open(url, 'Add Comment', 'width=520,height=450');
     }
 })
 
-function getContext(clickData,tab,ContextCode,LengthCode)
+
+function getNumberOfWordsSameInPage(selectedText)
 {
-  chrome.tabs.executeScript({code: LengthCode }, (length) => 
+  let page = document.body.innerText;
+	let wordInRegex = new RegExp(selectedText , "ig");
+  let count = (page.match(wordInRegex)).length;
+  alert( count);
+  return count;
+}
+
+
+function getContext(localNameCode)
+{
+  chrome.tabs.executeScript({code: localNameCode }, (localName) => 
   {
-    alert("Context Length is : " + length)
-    if(length<320)
-    {
-      let parentNode = ".parentNode";
-      let indexContext = ContextCode.lastIndexOf(".")
-      var newContextCode = [ContextCode .slice(0, indexContext), parentNode, ContextCode .slice(indexContext)].join('');
+    alert("Local Name is : " + localName)
 
-      let parentLength = ".parentNode";
-      let indexLength = ContextCode.lastIndexOf(".")
-      var newLengthCode = [LengthCode .slice(0, indexLength), parentLength, LengthCode .slice(indexLength)].join('');
-
-      getContext(clickData,tab,newContextCode,newLengthCode)
-    }
-    else
+    if(localName == 'p')
     {
-      chrome.tabs.executeScript({code: ContextCode }, (selection) => 
+      localNameCode = localNameCode.slice(0, -9); // Remove => localName
+
+      var textContent = localNameCode + "textContent";
+
+      alert(textContent);
+
+      chrome.tabs.executeScript({code: textContent }, (content) => 
       {
-          return selection;
+          alert(content);
       });
     }
   });
 }
 
-function getNumberOfWordsSameInPage(selectedText)
-{
-  let page = document.body.innerText;
-	let wordInRegex = new RegExp("SPA" , "ig");
-  let count = (page.match(wordInRegex )).length;
-  alert( count);
-}
-
 
 /*
 
-chrome.contextMenus.create(
-    {
-        "id": "annotate",
-        "title": "Click To Add Comment 👆", /* what appears in the menu 
-        "contexts": ['selection']  /* to make this appear only when user selects something on page 
-    }
-);
-
-chrome.contextMenus.onClicked.addListener( (clickData,tab) => //
-{
-    if(clickData.menuItemId == "annotate")
-    {
-      let ContextCode     =   "window.getSelection().anchorNode.textContent"
-      let LengthCode      =   "window.getSelection().anchorNode.textContent.length"
-      //let localNameCode   =   "window.getSelection().anchorNode.parentNode.localName"
-
-      let selectedText    =   clickData.selectionText;
-      //let context         =   getContext(ContextCode,LengthCode);
-      let countInPage     =   getNumberOfWordsSameInPage(selectedText);
-      let countInContext  =   getNumberOfWordsInTheContest(selectedText,context);
-
-
-      let pageUrl         =   clickData.pageUrl;
-      let pageTitle       =   tab.title;
-    
-    
-    
-      alert(pageUrl)
-      alert(pageTitle)
-      alert(countInPage)
-      alert(countInContext)
-    }
-})
+//window.getSelection().anchorNode.parentElement.nextElementSibling.children[0].textContent
 
 function getContext(ContextCode,LengthCode)//,localNameCode
 {
@@ -144,35 +99,10 @@ function getContext(ContextCode,LengthCode)//,localNameCode
   //   }
 
   // })
-  chrome.tabs.executeScript({code: LengthCode }, (length) => 
-  {
-    alert("Context Length is : " + length)
-    if(length<320)
-    {
-      let parentNode = ".parentNode";
-      let indexContext = ContextCode.lastIndexOf(".")
-      var newContextCode = [ContextCode .slice(0, indexContext), parentNode, ContextCode .slice(indexContext)].join('');
-
-      let parentLength = ".parentNode";
-      let indexLength = ContextCode.lastIndexOf(".")
-      var newLengthCode = [LengthCode .slice(0, indexLength), parentLength, LengthCode .slice(indexLength)].join('');
-
-      getContext(newContextCode,newLengthCode)
-    }
-    
-    else
-    {
-      chrome.tabs.executeScript({code: ContextCode }, (selection) => 
-      {
-          alert("Context : " + selection)
-      });
-    }
-  });
-}
 
 function getNumberOfWordsSameInPage(selectedText)
 {
-  var page = document.body.textContent;
+  var page = document.body.innerText;
 	var wordInRegex = new RegExp(selectedText , "ig");
   return (page.match(wordInRegex )).length;
 }
@@ -216,3 +146,44 @@ if (selectedText.length > 0)
 }
 
  */
+
+
+
+
+/*  first context code
+
+
+
+// let ContextCode = "window.getSelection().anchorNode.textContent"
+// let LengthCode = "window.getSelection().anchorNode.textContent.length"
+
+
+function getContext(clickData,tab,ContextCode,LengthCode)
+{
+  chrome.tabs.executeScript({code: LengthCode }, (length) => 
+  {
+    alert("Context Length is : " + length)
+    if(length<320)
+    {
+      let parentNode = ".parentNode";
+      let indexContext = ContextCode.lastIndexOf(".")
+      var newContextCode = [ContextCode .slice(0, indexContext), parentNode, ContextCode .slice(indexContext)].join('');
+
+      let parentLength = ".parentNode";
+      let indexLength = ContextCode.lastIndexOf(".")
+      var newLengthCode = [LengthCode .slice(0, indexLength), parentLength, LengthCode .slice(indexLength)].join('');
+
+      getContext(clickData,tab,newContextCode,newLengthCode)
+    }
+    else
+    {
+      chrome.tabs.executeScript({code: ContextCode }, (selection) => 
+      {
+          return selection;
+      });
+    }
+  });
+}
+
+
+*/

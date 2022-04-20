@@ -5,14 +5,9 @@ var pageUrl = params.get("pageUrl");
 var pageTitle = params.get("pageTitle")
 
 document.getElementById("title").innerHTML = "Leave your comment for (" + selectedText + ")";
-// document.getElementById("demo1").innerHTML = "The Page URL Is : " +  pageUrl;
-// document.getElementById("demo2").innerHTML = "The Page Title Is: " + pageTitle;
 
-
-// check if is logged in (API Storage)
 chrome.storage.local.get(['loggedin'], function(result)
   {
-      console.log('Value currently is ' + result.loggedin);
       if(result.loggedin ==  true)
       {
         document.getElementById("comment").style.display = "block";
@@ -24,17 +19,20 @@ chrome.storage.local.get(['loggedin'], function(result)
       }
   });
 
+  // var data = 
+  // {
+  //   urlPage : pageUrl,
+  //   pageName : pageTitle,
+  //   text : selectedText,
+  //   textCount : "5" ,
+  //   textCountNum : "2" ,
+  //   context : "hello please notificate me" 
+  // }
 
-document.addEventListener('DOMContentLoaded', function() 
-{
-    var link = document.getElementById('reply');
-    link.addEventListener('click', function() {
-        call();
-    });
-});
+  // const url = "http://localhost:8001/api/annotation/";
 
-
-function call()
-{
-    alert("sds")
-}
+  // fetch(url, { 
+  //   method: 'POST',
+  //   body: JSON.stringify(data),
+  // })
+  //.then((a) => alert(JSON.stringify(a)));

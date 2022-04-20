@@ -3,21 +3,25 @@ import React from "react";
 
 function LoggedInStatus ()
 {
-  let fullName = "";
+  let id = "";
   let email = "";
+  let fullName = "";
   let loggedStatus = false;
 
-  chrome.storage.local.set({loggedin: loggedStatus}, function() 
-  {
-    console.log('Value is set to ' + loggedStatus);
+  chrome.storage.local.set({loggedin: loggedStatus}, function() {
+    // console.log('Value is set to ' + loggedStatus);
   });
 
+  chrome.storage.local.set({id: id}, function() {
+    // console.log('Value is set to ' + id);
+  });
+  
   chrome.storage.local.set({email: email}, function() {
-    console.log('Value is set to ' + email);
+    // console.log('Value is set to ' + email);
   });
 
   chrome.storage.local.set({fullName: fullName}, function() {
-    console.log('Value is set to ' + fullName);
+    // console.log('Value is set to ' + fullName);
   });
 
   window.location.reload(false);

@@ -44,6 +44,7 @@ const SigninForm = (props) =>
         {
             setIsAuthorized(true)
 
+            let id = value.data._id;
             let fullName = value.data.full_name;
             let email = value.data.email;
             let loggedStatus = true;
@@ -57,6 +58,10 @@ const SigninForm = (props) =>
             chrome.storage.local.set({email: email}, function() {
                 console.log('Value is set to ' + email);
               });
+
+            chrome.storage.local.set({id: id}, function() {
+                console.log('Value is set to ' + id);
+            });
 
             chrome.storage.local.set({fullName: fullName}, function() {
                 console.log('Value is set to ' + fullName);

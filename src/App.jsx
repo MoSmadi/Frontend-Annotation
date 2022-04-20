@@ -21,17 +21,17 @@ const App = () => {
 
   chrome.storage.local.get(['loggedin'], function(result)
   {
-    console.log('Value currently is ' + result.loggedin);
+    // console.log('Value currently is ' + result.loggedin);
     setIsLoggedIn(result.loggedin)
   });
 
   chrome.storage.local.get(['email'], function(result) {
-    console.log('Value is set to ' + result.email);
+    // console.log('Value is set to ' + result.email);
     setemail(result.email)
   });
 
 chrome.storage.local.get(['fullName'], function(result) {
-    console.log('Value is set to ' + result.fullName);
+    // console.log('Value is set to ' + result.fullName);
     setfullName(result.fullName)
   });
 
