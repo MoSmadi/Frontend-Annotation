@@ -20,16 +20,33 @@ function goToHighlight(message, sender, sendResponse)
 
         // TODO : need to make something like array or map to store each word with it context and the number of it in the page or something like that --> to know which annotation i clicked 
 
+        var count = 0;
         for(var i of annotations)
         {
-            i.style['background-color'] = '#FF00FF';
-            
-            i.style['cursor'] = 'pointer';
-            
-            i.onclick = function()
-            {
-                alert('you clicked me'); // call a function open comment modal that dont add the annotation to the database again
-            }
+            // add a new div
+            g = document.createElement('div');
+            g.setAttribute("id", "highlightedWord"+count++);
+
+            // set new style to the selected word paragraph 
+            g.style['background-color'] = '#FFFF00';
+            g.style['cursor'] = 'pointer';
+            g.onclick = () => reply_click(this.id)
+
+            // set the div as a parent to the word
+            var parent = i.parentNode
+            parent.replaceChild(g, i);
+            g.appendChild(i);
+
+
+            // document.getElementById(g.id).onclick = function call(this.id)
+            // {
+            //     alert('you clicked at : ' + clicked_id); // call a function open comment modal that dont add the annotation to the database again
+            // }
         }
     }
+}
+
+function reply_click(clicked_id)
+{
+    alert('you clicked at : ' + clicked_id); // call a function open comment modal that dont add the annotation to the database again
 }
