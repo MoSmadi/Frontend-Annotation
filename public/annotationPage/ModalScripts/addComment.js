@@ -3,10 +3,10 @@ var params = new URLSearchParams(window.location.search);
 var selectedText = params.get("selectedText");
 var pageUrl = params.get("pageUrl");
 var pageTitle = params.get("pageTitle")
+var context = params.get("context")
 
 var textCount = "5"
 var textCountNum = "2"
-var context = "hello i am context"
 
 
 
