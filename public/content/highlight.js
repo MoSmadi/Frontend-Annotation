@@ -25,10 +25,35 @@ async function goToHighlight(message, sender, sendResponse)
         {
             var id = data[index]._id
             var text = data[index].text
-            var urlPage = data[index].urlPage
+            var pageURL = data[index].pageURL
             var context = data[index].context
+            var pageName = data[index].pageName
             var textCount = data[index].textCount
             var textCountNum = data[index].textCountNum
+            
+
+
+            // check if the word is in the page 
+            // if ((document.documentElement.textContent || document.documentElement.innerText).indexOf(text) <= -1) 
+            // {
+            //     console.log("not found");
+            //     continue;
+            // }
+
+
+
+            // let annotations = document.body.getElementsByTagName('p')
+            // var count = 0;
+            // var found = [];
+            // for (var i = 0; i < annotations.length; i++) 
+            // {
+            //     if (annotations[i].innerText.indexOf(text) > -1)
+            //     {
+            //         count++;
+            //         found.push(annotations[i].innerText.match(text));
+            //     }
+            // }
+
             
 
 
@@ -36,7 +61,7 @@ async function goToHighlight(message, sender, sendResponse)
 
             
             // add a new div information 
-            addingDivInformationWithHighlight(index, id, text, urlPage, context, textCount, textCountNum);
+            addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context, textCount, textCountNum);
 
 
             // set the div as a parent to the word
@@ -48,7 +73,7 @@ async function goToHighlight(message, sender, sendResponse)
     }
 }
 
-function addingDivInformationWithHighlight(index, id, text, urlPage, context, textCount, textCountNum) 
+function addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context, textCount, textCountNum) 
 {
     // add a new div
     div = document.createElement('div');
@@ -57,8 +82,9 @@ function addingDivInformationWithHighlight(index, id, text, urlPage, context, te
     // add data attribute
     div.dataset._id = id;
     div.dataset.text = text;
-    div.dataset.urlPage = urlPage;
+    div.dataset.pageURL = pageURL;
     div.dataset.context = context;
+    div.dataset.pageName = pageName;
     div.dataset.textCount = textCount;
     div.dataset.textCountNum = textCountNum;
 
@@ -70,11 +96,33 @@ function addingDivInformationWithHighlight(index, id, text, urlPage, context, te
 
 function clickToViewComments(clicked_id)
 {
-    console.log(clicked_id.path[1].dataset._id);
-    console.log(clicked_id.path[1].dataset.text);
-    console.log(clicked_id.path[1].dataset.urlPage);
-    console.log(clicked_id.path[1].dataset.context);
-    console.log(clicked_id.path[1].dataset.textCount);
-    console.log(clicked_id.path[1].dataset.textCountNum);
-    // alert('you clicked at : ' + clicked_id); // call a function open comment modal that dont add the annotation to the database again
+    chrome.runtime.sendMessage(
+    {
+        from:"theHighlightClicked"
+        ,id             :   clicked_id.path[1].dataset._id
+        ,text           :   clicked_id.path[1].dataset.text
+        ,pageURL        :   clicked_id.path[1].dataset.pageURL
+        ,context        :   clicked_id.path[1].dataset.context
+        ,textCount      :   clicked_id.path[1].dataset.textCount
+        ,textCountNum   :   clicked_id.path[1].dataset.textCountNum
+    }); // send data to background to opent the window
 }
+
+
+
+
+/*
+
+var aTags = document.getElementsByTagName("div");
+var searchText = "application"
+var found = [];
+
+for (var i = 0; i < aTags.length; i++)
+{
+  if (aTags[i].innerText.indexOf(searchText) > -1) 
+  {
+    found.push(aTags[i]);
+  }
+}
+
+*/

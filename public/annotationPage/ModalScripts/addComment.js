@@ -1,9 +1,12 @@
 var params = new URLSearchParams(window.location.search);
 
-var selectedText = params.get("selectedText");
-var pageUrl = params.get("pageUrl");
-var pageTitle = params.get("pageTitle")
-var context = params.get("context")
+// var id = params.get("id");
+var text = params.get("text");
+var pageURL = params.get("pageURL");
+var context = params.get("context");
+var pageName = params.get("pageName");
+// var textCount = params.get("textCount");
+// var textCountNum = params.get("textCountNum");
 
 var textCount = "5"
 var textCountNum = "2"
@@ -16,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     comment.addEventListener('submit', function() 
     {
-      AddAnnotation(pageUrl,pageTitle,selectedText,textCount,textCountNum,context)
+      AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
       AddComment();
     });
 });
@@ -30,12 +33,10 @@ function AddComment()
   chrome.storage.local.get(['id'], function(result) 
   {
     let userId = result.id
-    alert(userId);
   });
 
-  alert(comment);
-
-  const data = { 
+  const data = 
+  { 
     userId: 'example',
     annotateId: 'annotateId',
     text: comment,
@@ -53,16 +54,16 @@ function AddComment()
   alert("The comment is Submitted")
 }
 
-function AddAnnotation(urlPage,pageName,text,textCount,textCountNum,context)
+function AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
 {
     var data = 
     {
-      urlPage : urlPage,
-      pageName : pageName,
       text : text,
-      textCount : textCount ,
-      textCountNum : textCountNum ,
-      context : context
+      pageURL : pageURL,
+      context : context,
+      pageName : pageName,
+      textCount : textCount,
+      textCountNum : textCountNum
     }
 
     var options =

@@ -1,11 +1,14 @@
 var params = new URLSearchParams(window.location.search);
 
-var selectedText = params.get("selectedText");
-var pageUrl = params.get("pageUrl");
-var pageTitle = params.get("pageTitle")
-var context = params.get("context")
+var id = params.get("id");
+var text = params.get("text");
+var pageURL = params.get("pageURL");
+var context = params.get("context");
+var pageName = params.get("pageName");
+var textCount = params.get("textCount");
+var textCountNum = params.get("textCountNum");
 
-document.getElementById("title").innerHTML = "Leave your comment for (" + selectedText + ")";
+document.getElementById("title").innerHTML = "Leave your comment for (" + text + ")";
 
 chrome.storage.local.get(['loggedin'], function(result)
   {

@@ -1,3 +1,11 @@
+chrome.runtime.onMessage.addListener(function(data) {
+  if (data.from == "theHighlightClicked")
+  {
+    openExistsPage(data.id, data.text, data.urlPage, data.pageName, data.context, data.textCount, data.textCountNum)
+  }
+});
+
+
 chrome.contextMenus.create(
   {
     "id": "annotate",
@@ -5,6 +13,7 @@ chrome.contextMenus.create(
     "contexts": ['selection']  /* to make this appear only when user selects something on page */
   }
 );
+
 
 chrome.contextMenus.onClicked.addListener((clickData, tab) => 
 {
@@ -37,30 +46,53 @@ function getContext(localNameCode, clickData, tab)
 
       chrome.tabs.executeScript({ code: textContent }, (context) => 
       {
-        openPage(context, clickData, tab);
+        openNewPageToAddComment(context, clickData, tab);
       });
     }
   });
 }
 
 
-function openPage(context, clickData, tab) 
+function openNewPageToAddComment(context, clickData, tab) 
 {
-  let selectedText = clickData.selectionText;
-  let pageUrl = clickData.pageUrl;
-  let pageTitle = tab.title;
-  // let countInPage     =   getNumberOfWordsSameInPage(selectedText);
+  let text        =   clickData.selectionText;
+  let pageURL     =   clickData.pageUrl;
+  let pageName    =   tab.title;
+  // let textCount   =   getNumberOfWordsSameInPage(selectedText);
 
   let params = new URLSearchParams();
 
-  params.append("selectedText", selectedText);
-  // params.append("countInPage", countInPage);
-  params.append("pageTitle", pageTitle);
-  params.append("pageUrl", pageUrl);
+  // params.append("id", id);
+  params.append("text", text);
+  params.append("state", false);
+  params.append("pageURL", pageURL);
   params.append("context", context);
+  params.append("pageName", pageName);
+  // params.append("textCount", textCount);
+  // params.append("textCountNum", textCountNum);
+
+  let url = "../annotationPage/modal.html?" + params.toString();
+
+  window.open(url, 'Add Comment', 'width=520,height=450');
+}
+
+
+function openExistsPage(id, text, pageURL, pageName, context, textCount, textCountNum, pageName) 
+{
+  let params = new URLSearchParams();
+
+    params.append("id", id);
+    params.append("text", text);
+    params.append("state", true);
+    params.append("pageURL", pageURL);
+    params.append("context", context);
+    params.append("pageName", pageName);
+    params.append("textCount", textCount);
+    params.append("textCountNum", textCountNum);
 
 
   let url = "../annotationPage/modal.html?" + params.toString();
 
   window.open(url, 'Add Comment', 'width=520,height=450');
 }
+
