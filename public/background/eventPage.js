@@ -42,7 +42,7 @@ function getContext(localNameCode, clickData, tab)
     {
       localNameCode = localNameCode.slice(0, -9); // Remove => localName
 
-      var textContent = localNameCode + "textContent";
+      let textContent = localNameCode + "textContent";
 
       chrome.tabs.executeScript({ code: textContent }, (context) => 
       {
@@ -55,6 +55,8 @@ function getContext(localNameCode, clickData, tab)
 
 function openNewPageToAddComment(context, clickData, tab) 
 {
+  alert("add comment clicked")
+
   let text        =   clickData.selectionText;
   let pageURL     =   clickData.pageUrl;
   let pageName    =   tab.title;
@@ -62,9 +64,9 @@ function openNewPageToAddComment(context, clickData, tab)
 
   let params = new URLSearchParams();
 
-  // params.append("id", id);
+  params.append("id", 0);
   params.append("text", text);
-  params.append("state", false);
+  params.append("state", true);
   params.append("pageURL", pageURL);
   params.append("context", context);
   params.append("pageName", pageName);
@@ -79,11 +81,13 @@ function openNewPageToAddComment(context, clickData, tab)
 
 function openExistsPage(id, text, pageURL, pageName, context, textCount, textCountNum, pageName) 
 {
+  alert("highlight clicked")
   let params = new URLSearchParams();
 
+  alert(id)
     params.append("id", id);
     params.append("text", text);
-    params.append("state", true);
+    params.append("state", false);
     params.append("pageURL", pageURL);
     params.append("context", context);
     params.append("pageName", pageName);

@@ -1,15 +1,16 @@
-var params = new URLSearchParams(window.location.search);
+let paramsIn = new URLSearchParams(window.location.search);
 
-// var id = params.get("id");
-var text = params.get("text");
-var pageURL = params.get("pageURL");
-var context = params.get("context");
-var pageName = params.get("pageName");
-// var textCount = params.get("textCount");
-// var textCountNum = params.get("textCountNum");
+let idIn = paramsIn.get("id");
+let textIn = paramsIn.get("text");
+let stateIn = paramsIn.get("state");
+let pageURLIn = paramsIn.get("pageURL");
+let contextIn = paramsIn.get("context");
+let pageNameIn = paramsIn.get("pageName");
+// let textCountIn = paramsIn.get("textCount");
+// let textCountNumIn = paramsIn.get("textCountNum");
 
-var textCount = "5"
-var textCountNum = "2"
+let textCountIn = "5"
+let textCountNumIn = "2"
 
 
 
@@ -19,61 +20,68 @@ document.addEventListener('DOMContentLoaded', function()
 
     comment.addEventListener('submit', function() 
     {
-      AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
+      if(stateIn)
+      {
+        AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNumIn,contextIn)
+      }
       AddComment();
     });
 });
 
 
-
 function AddComment()
 {
+  alert("submit and add comment")
+
   let comment = document.getElementById("addComment").value; // get the textarea value
 
   chrome.storage.local.get(['id'], function(result) 
   {
-    let userId = result.id
-  });
+    const data = 
+    { 
+      userId: result.id,
+      annotateId: idIn, // return the id from the pre function
+      text: comment
+    };
 
-  const data = 
-  { 
-    userId: 'example',
-    annotateId: 'annotateId',
-    text: comment,
-  };
-
-  const url = "http://localhost:8001/api/users/abc@def.com/1234";
-
-  fetch(url, { 
-    method: 'GET'
-  })
-  .then((res) => res.json())
-  .then((a) => alert(JSON.stringify(a)))
-  .then(() => window.close());
-
-  alert("The comment is Submitted")
-}
-
-function AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
-{
-    var data = 
-    {
-      text : text,
-      pageURL : pageURL,
-      context : context,
-      pageName : pageName,
-      textCount : textCount,
-      textCountNum : textCountNum
-    }
-
-    var options =
+    let options =
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     }
 
-    const url = "http://localhost:8001/api/annotation/";
+    const url = "http://localhost:8001/api/comments/"+ idIn +"/"+ result.id;
 
-    fetch(url, options).catch((error) => {alert('Error:', error)});
+    fetch(url, options)
+    .then(alert("done to comment"))
+    .then(() => window.close())
+    .catch((error) => {alert('Error:', error)});
+  }); 
+}
+
+
+function AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
+{
+  alert("added annotation")
+  let data = 
+  {
+    text : textIn,
+    pageURL : pageURLIn,
+    context : contextIn,
+    pageName : pageNameIn,
+    textCount : textCountIn,
+    textCountNum : textCountNumIn
+  }
+
+  let options =
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }
+
+  const url = "http://localhost:8001/api/annotation/";
+
+  fetch(url, options).catch((error) => {alert('Error:', error)});
 }
