@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function()
 
     comment.addEventListener('submit', function() 
     {
-      if(stateIn)
+      if(idIn==0)
       {
         AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNumIn,contextIn)
       }
@@ -61,7 +61,7 @@ function AddComment()
 }
 
 
-function AddAnnotation(pageURL,pageName,text,textCount,textCountNum,context)
+function AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNumIn,contextIn)
 {
   alert("added annotation")
   let data = 
