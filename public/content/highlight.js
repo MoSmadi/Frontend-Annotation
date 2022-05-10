@@ -102,6 +102,7 @@ function clickToViewComments(clicked_id)
         ,id             :   clicked_id.path[1].dataset._id
         ,text           :   clicked_id.path[1].dataset.text
         ,pageURL        :   clicked_id.path[1].dataset.pageURL
+        ,pageName       :   clicked_id.path[1].dataset.pageName
         ,context        :   clicked_id.path[1].dataset.context
         ,textCount      :   clicked_id.path[1].dataset.textCount
         ,textCountNum   :   clicked_id.path[1].dataset.textCountNum
