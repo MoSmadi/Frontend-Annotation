@@ -1,7 +1,7 @@
 chrome.runtime.onMessage.addListener(function(data) {
   if (data.from == "theHighlightClicked")
   {
-    openExistsPage(data.id, data.text, data.pageURL, data.pageName, data.context, data.textCount, data.textCountNum)
+    openExistsPage(data.id, data.text, data.pageURL, data.pageName, data.context)//, data.textCount, data.textCountNum
   }
 });
 
@@ -25,14 +25,22 @@ chrome.contextMenus.onClicked.addListener((clickData, tab) =>
 })
 
 
-function getNumberOfWordsSameInPage(page,selectedText) 
-{
-  page = page.toString();
-  let wordInRegex = new RegExp(selectedText, "ig");
-  let count = (page.match(wordInRegex)).length;
-  return count;
-}
+// function getNumberOfWordsSameInPage(page,selectedText) 
+// {
+//   page = page.toString();
+//   let wordInRegex = new RegExp(selectedText, "ig");
+//   let count = (page.match(wordInRegex)).length;
+//   return count;
+// }
 
+
+// function getSpecificCount(page,count,selectedText) 
+// {
+//   page = page.toString();
+//   var fromFirstToTheWord = (page).substr(0, count);
+//   var textCountNum = getNumberOfWordsSameInPage(fromFirstToTheWord,selectedText) 
+//   return textCountNum;
+// }
 
 function getContext(localNameCode, clickData, tab) 
 {
@@ -51,25 +59,40 @@ function getContext(localNameCode, clickData, tab)
 
       let textContent = localNameCode + "textContent";
 
-      chrome.tabs.executeScript({ code: "document.body.innerText" }, async (page) => // for count
-      {
-        var count = await getNumberOfWordsSameInPage(page,clickData.selectionText);
 
-        chrome.tabs.executeScript({ code: textContent }, (context) => // for context
-        {
-          openNewPageToAddComment(context, clickData, tab, count);
-        });
-      });
+      //chrome.tabs.executeScript({ code: "window.getSelection().focusOffset" }, async (specificCount) => // for count to it 
+      //{
+      
+        //chrome.tabs.executeScript({ code: "document.body.innerText" }, async (page) => // for count
+        //{
+        
+          // var textCountNum = await getSpecificCount(page,specificCount,clickData.selectionText) 
+
+          // alert(textCountNum)
+
+          //var count = await getNumberOfWordsSameInPage(page,clickData.selectionText);
+
+          //alert(count)
+
+          chrome.tabs.executeScript({ code: textContent }, (context) => // for context
+          {
+            openNewPageToAddComment(context, clickData, tab);//, count, textCountNum
+          });
+
+        //});
+
+      //});
     }
   });
 }
 
 
-function openNewPageToAddComment(context, clickData, tab, textCount) 
+function openNewPageToAddComment(context, clickData, tab) //, textCount, textCountNum
 {
   let text        =   clickData.selectionText;
   let pageURL     =   clickData.pageUrl;
   let pageName    =   tab.title;
+  // let textCountNum    =   4;
 
   let params = new URLSearchParams();
 
@@ -79,7 +102,7 @@ function openNewPageToAddComment(context, clickData, tab, textCount)
   params.append("pageURL", pageURL);
   params.append("context", context);
   params.append("pageName", pageName);
-  params.append("textCount", textCount);
+  // params.append("textCount", textCount);
   // params.append("textCountNum", textCountNum);
 
   let url = "../annotationPage/modal.html?" + params.toString();
@@ -88,7 +111,7 @@ function openNewPageToAddComment(context, clickData, tab, textCount)
 }
 
 
-function openExistsPage(id, text, pageURL, pageName, context, textCount, textCountNum) 
+function openExistsPage(id, text, pageURL, pageName, context) //, textCount, textCountNum
 {
   let params = new URLSearchParams();
 
@@ -98,8 +121,8 @@ function openExistsPage(id, text, pageURL, pageName, context, textCount, textCou
   params.append("pageURL", pageURL);
   params.append("context", context);
   params.append("pageName", pageName);
-  params.append("textCount", textCount);
-  params.append("textCountNum", textCountNum);
+  // params.append("textCount", textCount);
+  // params.append("textCountNum", textCountNum);
 
 
   let url = "../annotationPage/modal.html?" + params.toString();

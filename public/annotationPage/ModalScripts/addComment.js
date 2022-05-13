@@ -6,10 +6,8 @@ let stateIn = paramsIn.get("state");
 let pageURLIn = paramsIn.get("pageURL");
 let contextIn = paramsIn.get("context");
 let pageNameIn = paramsIn.get("pageName");
-let textCountIn = paramsIn.get("textCount");
+// let textCountIn = paramsIn.get("textCount");
 // let textCountNumIn = paramsIn.get("textCountNum");
-
-let textCountNumIn = "2"
 
 
 document.addEventListener('DOMContentLoaded', function() 
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function()
   event.preventDefault();
 
       if (idIn == 0) {
-        AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNumIn,contextIn)
+        AddAnnotation(pageURLIn,pageNameIn,textIn,contextIn)//,textCountIn,textCountNumIn
         .then(data => 
           {
           var newId = JSON.stringify(data._id)
@@ -70,7 +68,7 @@ function AddComment(annotateId)
 }
 
 
-async function AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNumIn,contextIn)
+async function AddAnnotation(pageURLIn,pageNameIn,textIn,contextIn)//,textCountIn,textCountNumIn
 {
   let data = 
   {
@@ -78,8 +76,8 @@ async function AddAnnotation(pageURLIn,pageNameIn,textIn,textCountIn,textCountNu
     pageURL : pageURLIn,
     context : contextIn,
     pageName : pageNameIn,
-    textCount : textCountIn,
-    textCountNum : textCountNumIn
+    // textCount : textCountIn,
+    // textCountNum : textCountNumIn
   }
 
   let options =

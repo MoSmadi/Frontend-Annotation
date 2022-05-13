@@ -23,45 +23,55 @@ async function goToHighlight(message, sender, sendResponse)
 
         for (let index = 0; index < data.length; index++) 
         {
-            var id = data[index]._id
-            var text = data[index].text
-            var pageURL = data[index].pageURL
-            var context = data[index].context
-            var pageName = data[index].pageName
-            var textCount = data[index].textCount
-            var textCountNum = data[index].textCountNum
+            let id = data[index]._id
+            let text = data[index].text
+            let pageURL = data[index].pageURL
+            let context = data[index].context
+            let pageName = data[index].pageName
+            // let textCount = data[index].textCount
+            // let textCountNum = data[index].textCountNum
             
-
 
             // check if the word is in the page 
-            // if ((document.documentElement.textContent || document.documentElement.innerText).indexOf(text) <= -1) 
+           if ((document.documentElement.innerText).indexOf(text) <= -1) // textContent
+           {
+               // console.log("not found");
+               alert(text + " : text not found");
+               continue;
+           }
+
+           // if ((document.documentElement.textContent || document.documentElement.innerText).indexOf(text) <= -1) 
+           // {
+           //     console.log("not found");
+           //     continue;
+           // }
+
+
+
+            let page = document.body.innerText.split("");
+            let newText = text.split("");
+            var indexArray = [];
+
+            search(indexArray, page, newText); // return array with the indexes for the word
+
+            // for(var i =0 ; i<indexArray.length ; i++)
             // {
-            //     console.log("not found");
-            //     continue;
+            //     // add range select for the index to text.length
             // }
 
+            console.log(indexArray)
+
+ 
 
 
-            // let annotations = document.body.getElementsByTagName('p')
-            // var count = 0;
-            // var found = [];
-            // for (var i = 0; i < annotations.length; i++) 
-            // {
-            //     if (annotations[i].innerText.indexOf(text) > -1)
-            //     {
-            //         count++;
-            //         found.push(annotations[i].innerText.match(text));
-            //     }
-            // }
-
-            
 
 
-            let annotations = document.body.getElementsByTagName('p')[index]; // the word after operations
+
+            let annotations = document.body.getElementsByTagName('p')[index]; // the word after operations (should do a span and give it a name to retrive it (use index) )
 
             
             // add a new div information 
-            addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context, textCount, textCountNum);
+            addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context);//, textCount, textCountNum
 
 
             // set the div as a parent to the word
@@ -73,7 +83,7 @@ async function goToHighlight(message, sender, sendResponse)
     }
 }
 
-function addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context, textCount, textCountNum) 
+function addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context) //, textCount, textCountNum
 {
     // add a new div
     div = document.createElement('div');
@@ -85,8 +95,8 @@ function addingDivInformationWithHighlight(index, id, text, pageURL, pageName, c
     div.dataset.pageURL = pageURL;
     div.dataset.context = context;
     div.dataset.pageName = pageName;
-    div.dataset.textCount = textCount;
-    div.dataset.textCountNum = textCountNum;
+    // div.dataset.textCount = textCount;
+    // div.dataset.textCountNum = textCountNum;
 
     // set new style to the selected word paragraph 
     div.style['background-color'] = '#FFFF00';
@@ -104,12 +114,89 @@ function clickToViewComments(clicked_id)
         ,pageURL        :   clicked_id.path[1].dataset.pageURL
         ,pageName       :   clicked_id.path[1].dataset.pageName
         ,context        :   clicked_id.path[1].dataset.context
-        ,textCount      :   clicked_id.path[1].dataset.textCount
-        ,textCountNum   :   clicked_id.path[1].dataset.textCountNum
+        // ,textCount      :   clicked_id.path[1].dataset.textCount
+        // ,textCountNum   :   clicked_id.path[1].dataset.textCountNum
     }); // send data to background to opent the window
 }
 
 
+// A utility function to get maximum of two integers
+function max (a,b)
+{
+	return (a > b)? a: b;
+}
+
+// The preprocessing function for Boyer Moore's
+// bad character heuristic
+function badCharHeuristic(str,size,badchar)
+{
+	// Initialize all occurrences as -1
+	for (let i = 0; i < 256; i++)
+		badchar[i] = -1;
+
+	// Fill the actual value of last occurrence
+	// of a character (indices of table are ascii and values are index of occurrence)
+	for (i = 0; i < size; i++)
+		badchar[ str[i].charCodeAt(0)] = i;
+}
+
+/* A pattern searching function that uses Bad
+	Character Heuristic of Boyer Moore Algorithm */
+function search(indexArray, txt, pat)
+{
+	let m = pat.length;
+	let n = txt.length;
+
+	let badchar = new Array(256);
+
+	/* Fill the bad character array by calling
+		the preprocessing function badCharHeuristic()
+		for given pattern */
+	badCharHeuristic(pat, m, badchar);
+
+	let s = 0; // s is shift of the pattern with
+				// respect to text
+	// there are n-m+1 potential alignments
+	while(s <= (n - m))
+	{
+		let j = m-1;
+
+		/* Keep reducing index j of pattern while
+			characters of pattern and text are
+			matching at this shift s */
+		while(j >= 0 && pat[j] == txt[s+j])
+			j--;
+
+		/* If the pattern is present at current
+			shift, then index j will become -1 after
+			the above loop */
+		if (j < 0)
+		{
+			// console.log("Patterns occur at shift = " + s);
+            indexArray.push(s.toString());
+			/* Shift the pattern so that the next
+				character in text aligns with the last
+				occurrence of it in pattern.
+				The condition s+m < n is necessary for
+				the case when pattern occurs at the end
+				of text */
+			//txt[s+m] is character after the pattern in text
+			s += (s+m < n)? m-badchar[txt[s+m].charCodeAt(0)] : 1;
+
+		}
+
+		else
+			/* Shift the pattern so that the bad character
+				in text aligns with the last occurrence of
+				it in pattern. The max function is used to
+				make sure that we get a positive shift.
+				We may get a negative shift if the last
+				occurrence of bad character in pattern
+				is on the right side of the current
+				character. */
+			s += max(1, j - badchar[txt[s+j].charCodeAt(0)]);
+	}
+}
 
 
 /*
