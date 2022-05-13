@@ -27,12 +27,12 @@ if (id != 0)
     let annotationId = id;
     let userId = result.id;
 
-    renderUsers(userId, annotationId);
+    renderComments(userId, annotationId);
   });
 }
 
 
-async function getUsers(userId, annotationId) 
+async function getComments(userId, annotationId) 
 {
   const url = "http://localhost:8001/api/comments/" + userId + "/" + annotationId;
 
@@ -48,13 +48,28 @@ async function getUsers(userId, annotationId)
   }
 }
 
-
-async function renderUsers(userId, annotationId)
+async function getUser(userId) 
 {
-  let comments = await getUsers(userId, annotationId);
-  let html = '';
+  const url = "http://localhost:8001/api/users/"+ userId;
 
-  comments.forEach(comment => 
+  try 
+  {
+    let res = await fetch( url , { method: 'GET'});
+    return await res.json();
+  } 
+  
+  catch (error) 
+  {
+    console.log(error);
+  }
+}
+
+async function renderComments(userId, annotationId)
+{
+  let comments = await getComments(userId, annotationId);
+  let html = '';
+  
+  comments.forEach (comment  => 
   {
     let date = comment.createdAt.split("T")
 
@@ -64,11 +79,16 @@ async function renderUsers(userId, annotationId)
     let month = date[1]
     let year = date[0]
 
+    // let user = await getUser(comment.userId);
+
+    // alert(JSON.stringify(user))
+    // alert(user.full_name)
+
     let temp =
       `
     <div class="media-body">
         <div class="well well-lg">
-            <h4 class="media-heading text-uppercase reviews">` + comment.userId.full_name + `</h4>
+            <h4 class="media-heading text-uppercase reviews">` + "user.full_name" + `</h4>
             <ul class="media-date text-uppercase reviews list-inline">
                 <li class="dd">` + day + `</li>
                 <li class="mm">` + month + `</li>
