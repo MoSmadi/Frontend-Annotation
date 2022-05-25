@@ -31,6 +31,7 @@ async function goToHighlight(message, sender, sendResponse)
             // let textCount = data[index].textCount
             // let textCountNum = data[index].textCountNum
             
+            console.log("the original context is : " + context)
 
             // check if the word is in the page 
            if ((document.documentElement.innerText).indexOf(text) <= -1) // textContent
@@ -40,13 +41,6 @@ async function goToHighlight(message, sender, sendResponse)
                continue;
            }
 
-           // if ((document.documentElement.textContent || document.documentElement.innerText).indexOf(text) <= -1) 
-           // {
-           //     console.log("not found");
-           //     continue;
-           // }
-
-
 
             let page = document.body.innerHTML.split("");
             let newText = text.split("");
@@ -54,52 +48,107 @@ async function goToHighlight(message, sender, sendResponse)
 
             search(indexArray, page, newText); // return array with the indexes for the word
 
+            console.log(text  + " : " + indexArray)
+ 
+            var idddd;
+            var found = 0;
+
             for(var i =0 ; i<indexArray.length ; i++)
             {
+                var startInd = [indexArray[i]];
+
+                var last = (parseInt(indexArray[i]))+(text.length)
+
+                var lastInd = [last];
+                
                 var str = document.body.innerHTML;
 
-                var startInd = [indexArray[i]];
-                var lastInd = [indexArray[i]+text.length+1];
                 var count = startInd.length;
 
-                for (let i = 0; i < count; i++) 
+
+                for (let j = 0; j < count; j++) 
                 {
-                    let pre = str.substring(0, startInd[i]);
-                    let post = str.substring(lastInd[i], str.length);
-                    let phrase = str.substring(startInd[i], lastInd[i]);
+                    let pre = str.substring(0, startInd[j]);
+                    let post = str.substring(lastInd[j], str.length);
+                    let phrase = str.substring(startInd[j], lastInd[j]);
 
                     let nextPhrase;
 
-                    if (i < count - 1) 
+                    if (j < count - 1) 
                     {
-                        nextPhrase = str.substring(startInd[i + 1], lastInd[i + 1]);
+                        nextPhrase = str.substring(startInd[j + 1], lastInd[j + 1]);
                     }
 
-                    str = pre + `<div id="myHeader"; style='display:inline; color:#ed3833; cursor:pointer;'>${phrase}</div>` + post;
+                    str = pre + `<span id="myHeader${i}">${phrase}</span>` + post;
 
-                    if (i < count - 1) 
+                    if (j < count - 1) 
                     {
-                        startInd[i + 1] = str.indexOf(nextPhrase, startInd[i + 1]) - 1;
-                        lastInd[i + 1] = startInd[i + 1] + nextPhrase.length;
+                        startInd[j + 1] = str.indexOf(nextPhrase, startInd[j + 1]) - 1;
+                        lastInd[j + 1] = startInd[j + 1] + nextPhrase.length;
                     }
 
-                    alert(document.getElementById("myHeader").parentNode.innerText)
+                    idddd = "myHeader"+i;
+                    console.log(idddd);
+
+                    // TODO : compare inner text for the pre one and th new one
+
+                    var newContent = stripHtml(str);
+                    // console.log(newContent)
+
+                    var originalContentHTML = document.body.innerHTML;
+                    var originalContent = stripHtml(originalContentHTML);
+                    // console.log(originalContent)
+
+                    found =0;
+
+                    if(contentCompare(newContent, originalContent))
+                    {
+                        try 
+                        {
+                            document.body.innerHTML = str
+
+                            if(document.getElementById(idddd).parentNode.innerText == context)
+                            {
+                                console.log(document.getElementById(idddd).parentNode.innerText)
+                                i = indexArray.length
+                                j = count;
+                                found = 1
+                                break;
+                            }
+                        } 
+                        
+                        catch (error) 
+                        {
+                            console.log("Not This" + error)
+                            break;
+                        }
+                        
+                    }
+
+                    if (found == 0) 
+                    {
+                        document.body.innerHTML = originalContentHTML
+                    }
+                    
                 }
 
                 // add range select for the index to text.length
             }
 
-            console.log(indexArray)
+            // console.log(indexArray)
 
  
 
 
 
 
+         // let annotations = document.body.getElementsByTagName('p')[index]; // the word after operations (should do a span and give it a name to retrive it (use index) )
 
-            let annotations = document.body.getElementsByTagName('p')[index]; // the word after operations (should do a span and give it a name to retrive it (use index) )
-
+         if(found == 1)
+         {
+            let annotations = document.getElementById(idddd); // the word after operations (should do a span and give it a name to retrive it (use index) )
             
+            annotations.removeAttribute('id');
             // add a new div information 
             addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context);//, textCount, textCountNum
 
@@ -108,15 +157,32 @@ async function goToHighlight(message, sender, sendResponse)
             var parent = annotations.parentNode
             parent.replaceChild(div, annotations);
             div.appendChild(annotations);
+
+            // annotations.setAttribute('id', "highlightedWord" + index);
+         }
+           
             
         }
     }
 }
 
+function contentCompare(content1, content2)
+{
+    return content1.length == content2.length
+}
+
+
+function stripHtml(html)
+{
+   let tmp = document.createElement("div");
+   tmp.innerHTML = html;
+   return tmp.innerText;
+}
+
 function addingDivInformationWithHighlight(index, id, text, pageURL, pageName, context) //, textCount, textCountNum
 {
     // add a new div
-    div = document.createElement('div');
+    div = document.createElement('span');
     div.setAttribute("id", "highlightedWord" + index);
 
     // add data attribute
