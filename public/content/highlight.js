@@ -48,16 +48,46 @@ async function goToHighlight(message, sender, sendResponse)
 
 
 
-            let page = document.body.innerText.split("");
+            let page = document.body.innerHTML.split("");
             let newText = text.split("");
             var indexArray = [];
 
             search(indexArray, page, newText); // return array with the indexes for the word
 
-            // for(var i =0 ; i<indexArray.length ; i++)
-            // {
-            //     // add range select for the index to text.length
-            // }
+            for(var i =0 ; i<indexArray.length ; i++)
+            {
+                var str = document.body.innerHTML;
+
+                var startInd = [indexArray[i]];
+                var lastInd = [indexArray[i]+text.length+1];
+                var count = startInd.length;
+
+                for (let i = 0; i < count; i++) 
+                {
+                    let pre = str.substring(0, startInd[i]);
+                    let post = str.substring(lastInd[i], str.length);
+                    let phrase = str.substring(startInd[i], lastInd[i]);
+
+                    let nextPhrase;
+
+                    if (i < count - 1) 
+                    {
+                        nextPhrase = str.substring(startInd[i + 1], lastInd[i + 1]);
+                    }
+
+                    str = pre + `<div id="myHeader"; style='display:inline; color:#ed3833; cursor:pointer;'>${phrase}</div>` + post;
+
+                    if (i < count - 1) 
+                    {
+                        startInd[i + 1] = str.indexOf(nextPhrase, startInd[i + 1]) - 1;
+                        lastInd[i + 1] = startInd[i + 1] + nextPhrase.length;
+                    }
+
+                    alert(document.getElementById("myHeader").parentNode.innerText)
+                }
+
+                // add range select for the index to text.length
+            }
 
             console.log(indexArray)
 
