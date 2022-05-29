@@ -67,9 +67,9 @@ async function getUser(userId)
 async function renderComments(userId, annotationId)
 {
   let comments = await getComments(userId, annotationId);
-  let html = '';
+  var html = '';
   
-  comments.forEach (comment  => 
+  await comments.forEach (async comment  => 
   {
     let date = comment.createdAt.split("T")
 
@@ -79,16 +79,21 @@ async function renderComments(userId, annotationId)
     let month = date[1]
     let year = date[0]
 
-    // let user = await getUser(comment.userId);
+    
+    
 
-    // alert(JSON.stringify(user))
-    // alert(user.full_name)
+    let user = await getUser(comment.userId);
+    
+    // chrome.extension.getBackgroundPage().console.log(user)
+
+    var userFullName = user.full_name;
+
 
     let temp =
       `
     <div class="media-body">
         <div class="well well-lg">
-            <h4 class="media-heading text-uppercase reviews">` + "user.full_name" + `</h4>
+            <h4 class="media-heading text-uppercase reviews">` + userFullName + `</h4>
             <ul class="media-date text-uppercase reviews list-inline">
                 <li class="dd">` + day + `</li>
                 <li class="mm">` + month + `</li>
@@ -97,20 +102,19 @@ async function renderComments(userId, annotationId)
             <p class="media-comment">
             `+ comment.text + ` 
             </p>
-            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply">
-                Reply
-            </a>
-            
         </div>
     </div>
     `
+    // <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply">
+    //     Reply
+    // </a>
     // <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne">
     //     2 comments
     // </a>
 
     html += temp;
-  });
 
-  let container = document.querySelector('.media-list');
-  container.innerHTML = html;
+    let container = document.querySelector('.media-list');
+    container.innerHTML = html;
+  });
 }
