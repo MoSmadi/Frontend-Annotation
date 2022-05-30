@@ -48,10 +48,41 @@ async function goToHighlight(message, sender, sendResponse)
             {
                 try 
                 {
+                    
                     // if(!node.firstChild.hasChildNodes())
                     {      
                         if(node.textContent.includes(text))
                         {
+                            // let res; 
+
+                            // let dataToNLP = 
+                            // { 
+                            //     oldContext : context ,
+                            //     newContext : node.innerText
+                            // };
+        
+                            // let options =
+                            // {
+                            //     method: 'POST',
+                            //     headers: { 'Content-Type': 'application/json' },
+                            //     body: JSON.stringify(dataToNLP)
+                            // }
+                            
+                            // let url = "http://127.0.0.1:5000/getSimilarity";
+        
+                            // try
+                            // {
+                            //     res = await fetch(url, options);
+                                
+                            // } 
+        
+                            // catch (error) 
+                            // {
+                            //     alert('Error in annotation:', JSON.stringify(error.message));
+                            // }
+        
+                            // console.log(res.json());
+        
                             if(node.innerText == context)
                             {
                                 var page = node.innerHTML;
