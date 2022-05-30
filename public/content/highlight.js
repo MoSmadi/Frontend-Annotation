@@ -5,6 +5,8 @@ async function goToHighlight(message, sender, sendResponse)
     // window.location.reload();
     if (message.txt === "highlight") 
     {
+        var startTime = performance.now()
+
         let pageLink = window.location.href;
 
         let encoded = encodeURIComponent(pageLink);
@@ -32,7 +34,7 @@ async function goToHighlight(message, sender, sendResponse)
             
 
             // check if the word is in the page 
-            if ((document.documentElement.innerText).indexOf(text) <= -1) // textContent
+            if ((document.documentElement.innerText).indexOf(text) <= -1)
             {
                 alert(text + " : text not found");
                 continue;
@@ -42,60 +44,47 @@ async function goToHighlight(message, sender, sendResponse)
             var treeWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT);
 
             var node;
-            // var newID;
 
-            while(node = treeWalker.nextNode())
+            while(treeWalker.currentNode != null)
             {
+                node = treeWalker.nextNode()
                 try 
                 {
-                    
-                    // if(!node.firstChild.hasChildNodes())
-                    {      
-                        if(node.textContent.includes(text))
+                    let theNode = node
+
+                    if(theNode.innerText.includes(text))
+                    {
+                        if(theNode.innerText == context)
                         {
-                            // let res; 
+                            var page = theNode.innerHTML;
 
-                            // let dataToNLP = 
-                            // { 
-                            //     oldContext : context ,
-                            //     newContext : node.innerText
-                            // };
-        
-                            // let options =
-                            // {
-                            //     method: 'POST',
-                            //     headers: { 'Content-Type': 'application/json' },
-                            //     body: JSON.stringify(dataToNLP)
-                            // }
+                            var regexp = new RegExp(text);
                             
-                            // let url = "http://127.0.0.1:5000/getSimilarity";
-        
-                            // try
-                            // {
-                            //     res = await fetch(url, options);
-                                
-                            // } 
-        
-                            // catch (error) 
-                            // {
-                            //     alert('Error in annotation:', JSON.stringify(error.message));
-                            // }
-        
-                            // console.log(res.json());
-        
-                            if(node.innerText == context)
+                            theNode.innerHTML = page.replace(regexp,`<span id="myHeader`+ index + `">`+ text + `</span>`)
+
+                            break;
+                        }
+
+                        else if (theNode.innerText.length < context.length+100)
+                        {
+                            await nlpProcessing(context,theNode.innerText).then(data => 
                             {
-                                var page = node.innerHTML;
+                                var sim = JSON.stringify(data.Similar)
 
-                                var regexp = new RegExp(text);
-                                
-                                node.innerHTML = page.replace(regexp,`<span id="myHeader`+ index + `">`+ text + `</span>`)
+                                if(sim >= 0.9)
+                                {
+                                    var page = theNode.innerHTML;
 
-                                break;
-                            }
+                                    var regexp = new RegExp(text);
+                                    
+                                    theNode.innerHTML = page.replace(regexp,`<span id="myHeader`+ index + `">`+ text + `</span>`)
+                                    
+                                    treeWalker = treeWalker.lastChild();
+                                }
+                            });
                         }
                     }
-                } 
+                }
                 
                 catch (error) 
                 {
@@ -126,9 +115,40 @@ async function goToHighlight(message, sender, sendResponse)
                 
             }
         }
+        var endTime = performance.now()
+        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
     }
 }
 
+
+async function nlpProcessing(context,nodeContext)
+{
+    let dataToNLP = 
+    { 
+        oldContext : context ,
+        newContext : nodeContext
+    };
+    
+    let options =
+    {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dataToNLP)
+    }
+
+    let url = "http://127.0.0.1:5000/getSimilarity";
+
+    try 
+    {
+        const res = await fetch(url, options);
+        return await res.json();
+    } 
+    
+    catch (error) 
+    {
+        alert('Error in annotation:', JSON.stringify(error.message));
+    }
+}
 
 function addingDivInformationWithHighlight(newID, id, text, pageURL, pageName, context) //, textCount, textCountNum
 {

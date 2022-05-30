@@ -22,19 +22,17 @@ chrome.storage.local.get(['loggedin'], function (result)
 
 if (id != 0) 
 {
-  chrome.storage.local.get(['id'], function (result)
+  chrome.storage.local.get(['id'], function ()
   {
     let annotationId = id;
-    let userId = result.id;
-
-    renderComments(userId, annotationId);
+    renderComments(annotationId);
   });
 }
 
 
-async function getComments(userId, annotationId) 
+async function getComments(annotationId) 
 {
-  const url = "http://localhost:8001/api/comments/" + userId + "/" + annotationId;
+  const url = "http://localhost:8001/api/comments/" + "/" + annotationId;
 
   try 
   {
@@ -64,9 +62,9 @@ async function getUser(userId)
   }
 }
 
-async function renderComments(userId, annotationId)
+async function renderComments(annotationId)
 {
-  let comments = await getComments(userId, annotationId);
+  let comments = await getComments(annotationId);
   var html = '';
   
   await comments.forEach (async comment  => 
